@@ -11,6 +11,9 @@
 @use "../../../assets/styles/index.scss" as *;
 .intro {
   color: $color-gold;
+  @include responsive($screen-tablet-s) {
+      padding-right: 3rem;
+  }
   &__heading {
     color: $color-gold;
     font-weight: 400;

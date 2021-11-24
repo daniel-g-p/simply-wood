@@ -124,8 +124,8 @@ export default {
   }
   &__toggle {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 1rem;
+    right: 1rem;
     @include responsive($screen-tablet-s) {
       display: none;
     }

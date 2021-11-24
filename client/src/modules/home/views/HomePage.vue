@@ -10,6 +10,7 @@
       @toggle-menu="toggleMenu"
     ></navigation-menu>
     <intro-text></intro-text>
+    <contact-links class="home__contact"></contact-links>
   </div>
 </template>
 
@@ -19,12 +20,14 @@ import { ref } from "vue";
 import IntroText from "../components/IntroText.vue";
 import NavigationMenu from "../components/NavigationMenu.vue";
 import NavigationToggle from "../components/NavigationToggle.vue";
+import ContactLinks from "../components/ContactLinks.vue";
 
 export default {
   components: {
     IntroText,
     NavigationMenu,
     NavigationToggle,
+    ContactLinks,
   },
   setup() {
     const menuOpen = ref(false);
@@ -63,6 +66,17 @@ export default {
     left: 1.5rem;
     @include responsive($screen-tablet-s) {
       display: none;
+    }
+  }
+  &__contact {
+    position: absolute;
+    bottom: 2rem;
+    right: 50%;
+    transform: translateX(50%);
+    @include responsive($screen-tablet-s) {
+      bottom: 50%;
+      right: 3rem;
+      transform: translate(0, 50%);
     }
   }
 }
