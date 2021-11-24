@@ -17,7 +17,6 @@
     font-size: 3rem;
     text-align: center;
     line-height: 1.25;
-    margin-bottom: 1rem;
     @include responsive($screen-tablet-s) {
       text-align: left;
       font-size: 4.5rem;
@@ -32,6 +31,7 @@
       display: block;
       font-family: "Open Sans";
       line-height: 1.5;
+      margin-top: 1rem;
     }
   }
 }

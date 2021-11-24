@@ -9,7 +9,8 @@
   body {
     box-sizing: border-box;
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
   }
   a,
   button,
@@ -37,9 +38,16 @@
   }
 }
 
-@mixin responsive($screen-size) {
-  @media (min-width: $screen-size) {
-    @content;
+@mixin responsive($screen-size, $type: "min") {
+  @if ($type == "min") {
+    @media (min-width: $screen-size) {
+      @content;
+    }
+  }
+  @else {
+    @media (max-width: $screen-size) {
+      @content;
+    }
   }
 }
 
