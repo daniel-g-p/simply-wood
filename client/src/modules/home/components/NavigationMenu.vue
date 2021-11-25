@@ -12,7 +12,7 @@
       <a href="/" class="header__link">Avis de nos clients</a>
       <a href="/" class="header__link">Contact</a>
     </nav>
-    <div class="header__background"></div>
+    <div class="header__background" @click="toggleMenu"></div>
   </header>
 </template>
 
@@ -100,10 +100,10 @@ export default {
       }
     }
     @include responsive($screen-tablet-s, "max") {
-      color: $color-blue-transparent;
+      color: $color-blue;
       &:hover,
       &:focus {
-        color: $color-blue;
+        color: $color-blue-transparent;
       }
     }
   }

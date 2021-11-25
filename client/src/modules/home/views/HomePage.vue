@@ -73,7 +73,7 @@ export default {
     bottom: 2rem;
     right: 50%;
     transform: translateX(50%);
-    @include responsive($screen-tablet-s) {
+    @include responsive($screen-desktop-s) {
       bottom: 50%;
       right: 3rem;
       transform: translate(0, 50%);

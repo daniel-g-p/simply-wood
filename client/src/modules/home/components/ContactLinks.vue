@@ -44,7 +44,7 @@
 .contact {
   display: flex;
   gap: 0.75rem;
-  @include responsive($screen-tablet-s) {
+  @include responsive($screen-desktop-s) {
     flex-direction: column;
   }
   &__button {

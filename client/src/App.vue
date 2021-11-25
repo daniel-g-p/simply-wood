@@ -17,4 +17,8 @@ html {
   font: 100%/1 "Amiri", serif;
   letter-spacing: 0.1em;
 }
+::selection {
+  background-color: $color-purple;
+  color: $color-white;
+}
 </style>

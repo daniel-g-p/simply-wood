@@ -12,7 +12,7 @@
 .intro {
   color: $color-gold;
   @include responsive($screen-tablet-s) {
-      padding-right: 3rem;
+    padding-right: 3rem;
   }
   &__heading {
     color: $color-gold;
@@ -33,6 +33,7 @@
     @include responsive($screen-tablet-s) {
       display: block;
       font-family: "Open Sans";
+      font-size: 1.25rem;
       line-height: 1.5;
       margin-top: 1rem;
     }
