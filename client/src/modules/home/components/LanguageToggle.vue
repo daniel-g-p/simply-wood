@@ -9,6 +9,7 @@
           `language__button--${index + 1}`,
           activeLanguage === button ? 'language__button--active' : '',
         ]"
+        @click="setLanguage(button)"
       >
         {{ button }}
       </button>
@@ -42,7 +43,10 @@ export default {
     const activeLanguage = computed(() => {
       return store.getters["language/activeLanguage"];
     });
-    return { buttons, toggleColor, activeLanguage };
+    const setLanguage = (language) => {
+      store.dispatch("language/setActiveLanguage", language);
+    };
+    return { buttons, toggleColor, activeLanguage, setLanguage };
   },
 };
 </script>
@@ -58,6 +62,9 @@ export default {
   &--gold {
     .language__button {
       color: $color-gold-transparent;
+      &--active {
+        color: $color-gold;
+      }
       &:hover,
       &:focus {
         color: $color-blue;
@@ -70,6 +77,9 @@ export default {
   &--blue {
     .language__button {
       color: $color-blue-transparent;
+      &--active {
+        color: $color-blue;
+      }
       &:hover,
       &:focus {
         color: $color-gold;
@@ -87,7 +97,6 @@ export default {
     cursor: pointer;
     transition: color 0.25s ease;
     &--active {
-      font-weight: 700;
       &.language__button--1 ~ .language__background {
         left: 0;
       }

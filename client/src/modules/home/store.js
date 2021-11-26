@@ -12,11 +12,11 @@ export default {
   },
   mutations: {
     setActiveLanguage(state, payload) {
-      state.language = payload;
+      state.activeLanguage = payload;
     },
   },
   actions: {
-    setactiveLanguage(context, payload) {
+    setActiveLanguage(context, payload) {
       context.commit("setActiveLanguage", payload);
     },
   },
