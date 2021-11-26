@@ -12,6 +12,7 @@
       <a href="/" class="header__link">Avis de nos clients</a>
       <a href="/" class="header__link">Contact</a>
     </nav>
+    <language-toggle></language-toggle>
     <div class="header__background" @click="toggleMenu"></div>
   </header>
 </template>
@@ -20,10 +21,12 @@
 import { computed } from "vue";
 
 import NavigationToggle from "../components/NavigationToggle.vue";
+import LanguageToggle from "../components/LanguageToggle.vue";
 
 export default {
   components: {
     NavigationToggle,
+    LanguageToggle,
   },
   props: {
     open: {
@@ -46,11 +49,12 @@ export default {
 <style lang="scss" scoped>
 @use "../../../assets/styles/index.scss" as *;
 .header {
-  position: absolute;
-  z-index: 1;
-  top: 2rem;
-  left: 10vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   @include responsive($screen-tablet-s, "max") {
+    position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     &--closed {

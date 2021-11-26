@@ -62,7 +62,7 @@
   }
   &__icon {
     fill: $color-blue;
-    height: 67%;
+    height: 50%;
   }
 }
 </style>

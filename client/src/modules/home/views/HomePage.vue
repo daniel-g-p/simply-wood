@@ -57,8 +57,11 @@ export default {
   align-items: center;
   padding: 3rem;
   @include responsive($screen-tablet-s) {
-    justify-content: flex-start;
-    padding: 10vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+    align-items: center;
+    padding: 3rem 10vw;
   }
   &__toggle {
     position: absolute;
