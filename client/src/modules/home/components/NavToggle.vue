@@ -31,7 +31,7 @@ export default {
   props: {
     type: {
       type: String,
-      required: true,
+      default: "open",
       validator(value) {
         return ["open", "close"].includes(value);
       },
@@ -49,17 +49,9 @@ export default {
       context.emit("toggle-menu");
     };
     const toggleClass = computed(() => {
-      switch (props.color) {
-        case "gold": {
-          return { "toggle--gold": true };
-        }
-        case "blue": {
-          return { "toggle--blue": true };
-        }
-        default: {
-          return { "toggle--gold": true };
-        }
-      }
+      return props.color === "gold"
+        ? { "toggle--gold": true }
+        : { "toggle--blue": true };
     });
     return { toggleMenu, toggleClass };
   },

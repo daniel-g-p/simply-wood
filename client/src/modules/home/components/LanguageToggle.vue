@@ -1,80 +1,116 @@
 <template>
-  <div class="language">
-    <div class="language__container">
-      <button class="language__button language__button--1">FR</button>
+  <div>
+    <div class="language" :class="toggleColor">
       <button
-        class="language__button language__button--2 language__button--active"
+        v-for="(button, index) in buttons"
+        :key="button"
+        class="language__button"
+        :class="[
+          `language__button--${index + 1}`,
+          activeLanguage === button ? 'language__button--active' : '',
+        ]"
       >
-        NL
+        {{ button }}
       </button>
-      <button class="language__button language__button--3">EN</button>
       <div class="language__background"></div>
     </div>
   </div>
 </template>
 
+<script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+export default {
+  props: {
+    color: {
+      type: String,
+      default: "gold",
+      validator(value) {
+        return ["gold", "blue"].includes(value);
+      },
+    },
+  },
+  setup(props) {
+    const buttons = ["fr", "nl", "en"];
+    const store = useStore();
+    const toggleColor = computed(() => {
+      return props.color === "gold"
+        ? { "language--gold": true }
+        : { "language--blue": true };
+    });
+    const activeLanguage = computed(() => {
+      return store.getters["language/activeLanguage"];
+    });
+    return { buttons, toggleColor, activeLanguage };
+  },
+};
+</script>
+
 <style lang="scss" scoped>
 @use "../../../assets/styles/index.scss" as *;
 
 .language {
-  @include responsive($screen-tablet-s, "max") {
-    position: absolute;
-    top: 0;
-    left: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  text-align: center;
+  &--gold {
+    .language__button {
+      color: $color-gold-transparent;
+      &:hover,
+      &:focus {
+        color: $color-blue;
+        ~ .language__background {
+          background-color: $color-gold;
+        }
+      }
+    }
   }
-  &__container {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    text-transform: uppercase;
-    color: $color-gold-transparent;
-    text-align: center;
-    font-weight: 4;
+  &--blue {
+    .language__button {
+      color: $color-blue-transparent;
+      &:hover,
+      &:focus {
+        color: $color-gold;
+        ~ .language__background {
+          background-color: $color-blue;
+        }
+      }
+    }
   }
   &__button {
     width: 2.5em;
     height: 1.5em;
-    transition: background-color 0.25s ease;
+    text-transform: uppercase;
+    color: $color-gold-transparent;
     cursor: pointer;
+    transition: color 0.25s ease;
     &--active {
-      color: $color-gold;
       font-weight: 700;
-      &.language__button--1 {
-        ~ .language__background {
-          left: 0;
-        }
+      &.language__button--1 ~ .language__background {
+        left: 0;
       }
-      &.language__button--2 {
-        ~ .language__background {
-          left: 2.5em;
-        }
+      &.language__button--2 ~ .language__background {
+        left: 2.5em;
       }
-      &.language__button--3 {
-        ~ .language__background {
-          left: 5em;
-        }
+      &.language__button--3 ~ .language__background {
+        left: 5em;
       }
     }
     &:hover,
     &:focus {
-      color: $color-blue;
       ~ .language__background {
-        background-color: $color-gold;
+        transition: left 0.125s ease, background-color 0.125s ease 0.125s;
       }
-      &.language__button--1 {
-        ~ .language__background {
-          left: 0;
-        }
+      &.language__button--1 ~ .language__background {
+        left: 0;
       }
-      &.language__button--2 {
-        ~ .language__background {
-          left: 2.5em;
-        }
+      &.language__button--2 ~ .language__background {
+        left: 2.5em;
       }
-      &.language__button--3 {
-        ~ .language__background {
-          left: 5em;
-        }
+      &.language__button--3 ~ .language__background {
+        left: 5em;
       }
     }
   }
@@ -86,7 +122,6 @@
     top: 0;
     height: 100%;
     width: 2.5em;
-    transition: background-color 0.25s ease, left 0.125s ease;
   }
 }
 </style>

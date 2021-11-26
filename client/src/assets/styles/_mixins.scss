@@ -19,6 +19,7 @@
   textarea,
   select {
     font: inherit;
+    text-decoration: none;
     color: currentColor;
     background: none;
     outline: none;
@@ -44,8 +45,7 @@
     @media (min-width: $screen-size) {
       @content;
     }
-  }
-  @else {
+  } @else {
     @media (max-width: $screen-size) {
       @content;
     }

@@ -11,31 +11,30 @@
 @use "../../../assets/styles/index.scss" as *;
 .intro {
   color: $color-gold;
-  @include responsive($screen-tablet-s) {
-    padding-right: 3rem;
-  }
   &__heading {
     color: $color-gold;
     font-weight: 400;
     font-size: 3rem;
     text-align: center;
     line-height: 1.25;
-    @include responsive($screen-tablet-s) {
+    @include responsive($screen-tablet-m) {
       text-align: left;
       font-size: 4.5rem;
     }
-    @include responsive($screen-desktop-s) {
+    @include responsive($screen-desktop-m) {
       font-size: 6rem;
     }
   }
   &__text {
-    display: none;
-    @include responsive($screen-tablet-s) {
-      display: block;
-      font-family: "Open Sans";
-      font-size: 1.25rem;
-      line-height: 1.5;
-      margin-top: 1rem;
+    display: block;
+    text-align: center;
+    font-family: "Open Sans";
+    line-height: 1.5;
+    margin-top: 1rem;
+    max-width: 20rem;
+    @include responsive($screen-tablet-m) {
+      text-align: left;
+      max-width: initial;
     }
   }
 }

@@ -1,16 +1,8 @@
 <template>
   <div class="home">
-    <navigation-toggle
-      class="home__toggle"
-      :type="'open'"
-      @toggle-menu="toggleMenu"
-    ></navigation-toggle>
-    <navigation-menu
-      :open="menuOpen"
-      @toggle-menu="toggleMenu"
-    ></navigation-menu>
+    <mobile-nav class="home__nav--mobile"></mobile-nav>
+    <desktop-nav class="home__nav--desktop"></desktop-nav>
     <intro-text></intro-text>
-    <contact-links class="home__contact"></contact-links>
   </div>
 </template>
 
@@ -18,16 +10,14 @@
 import { ref } from "vue";
 
 import IntroText from "../components/IntroText.vue";
-import NavigationMenu from "../components/NavigationMenu.vue";
-import NavigationToggle from "../components/NavigationToggle.vue";
-import ContactLinks from "../components/ContactLinks.vue";
+import DesktopNav from "../components/DesktopNav.vue";
+import MobileNav from "../components/MobileNav.vue";
 
 export default {
   components: {
     IntroText,
-    NavigationMenu,
-    NavigationToggle,
-    ContactLinks,
+    DesktopNav,
+    MobileNav,
   },
   setup() {
     const menuOpen = ref(false);
@@ -55,13 +45,28 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem;
-  @include responsive($screen-tablet-s) {
+  padding: 1.5rem;
+  @include responsive($screen-tablet-m) {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: max-content 1fr;
-    align-items: center;
+    grid-template-rows: 3rem 1fr 3rem;
+    justify-content: stretch;
     padding: 3rem 10vw;
+  }
+  &__nav {
+    &--mobile {
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include responsive($screen-tablet-m) {
+        display: none;
+      }
+    }
+    &--desktop {
+      display: none;
+      @include responsive($screen-tablet-m) {
+        display: flex;
+      }
+    }
   }
   &__toggle {
     position: absolute;
