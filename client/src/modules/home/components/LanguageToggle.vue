@@ -93,6 +93,7 @@ export default {
     width: 2.5em;
     height: 1.5em;
     text-transform: uppercase;
+    font-weight: 700;
     color: $color-gold-transparent;
     cursor: pointer;
     transition: color 0.25s ease;
