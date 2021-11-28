@@ -1,12 +1,12 @@
 <template>
   <header class="menu">
     <nav class="menu__nav">
-      <nav-link
+      <base-link
         v-for="link in links"
         :key="link.label"
-        :label="link.label"
         :route-name="link.routeName"
-      ></nav-link>
+        >{{ link.label }}</base-link
+      >
     </nav>
     <language-toggle></language-toggle>
   </header>
@@ -18,12 +18,10 @@ import { useStore } from "vuex";
 
 import international from "../../../international.js";
 
-import NavLink from "./NavLink.vue";
 import LanguageToggle from "./LanguageToggle.vue";
 
 export default {
   components: {
-    NavLink,
     LanguageToggle,
   },
   setup() {

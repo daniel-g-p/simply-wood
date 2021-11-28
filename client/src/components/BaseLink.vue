@@ -1,6 +1,6 @@
 <template>
   <router-link :to="route">
-    <div class="link" :class="linkClass">{{ label }}</div>
+    <div class="link" :class="linkClass"><slot></slot></div>
   </router-link>
 </template>
 
@@ -20,10 +20,6 @@ export default {
       type: String,
       required: true,
     },
-    label: {
-      type: String,
-      required: true,
-    },
   },
   setup(props) {
     const linkClass = computed(() => {
@@ -40,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use "../../../assets/styles/index.scss" as *;
+@use "../assets/styles/index.scss" as *;
 .link {
   position: relative;
   font-style: italic;

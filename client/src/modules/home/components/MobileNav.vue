@@ -11,13 +11,13 @@
           @toggle-menu="toggleMenu"
         ></nav-toggle>
         <nav class="menu__nav">
-          <nav-link
+          <base-link
             v-for="link in links"
             :key="link.label"
-            :label="link.label"
             :route-name="link.routeName"
             color="blue"
-          ></nav-link>
+            >{{ link.label }}</base-link
+          >
         </nav>
       </div>
     </header>
@@ -31,13 +31,11 @@ import { useStore } from "vuex";
 import international from "../../../international.js";
 
 import NavToggle from "./NavToggle.vue";
-import NavLink from "./NavLink.vue";
 import LanguageToggle from "./LanguageToggle.vue";
 
 export default {
   components: {
     NavToggle,
-    NavLink,
     LanguageToggle,
   },
   setup() {

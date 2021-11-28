@@ -30,6 +30,7 @@ export default {
 @include font-face("Open Sans", "open-sans/regular", 400, "normal");
 html {
   font: 100%/1 "Amiri", serif;
+  color: $color-blue;
   letter-spacing: 0.1em;
 }
 ::selection {
