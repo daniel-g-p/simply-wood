@@ -33,7 +33,7 @@ export default {
     },
   },
   setup(props) {
-    const buttons = ["fr", "nl", "en"];
+    const buttons = ["fr", "nl", "de", "en"];
     const store = useStore();
     const toggleColor = computed(() => {
       return props.color === "gold"
@@ -121,6 +121,9 @@ export default {
       }
       &.language__button--3 ~ .language__background {
         left: 5em;
+      }
+      &.language__button--4 ~ .language__background {
+        left: 7.5em;
       }
     }
   }

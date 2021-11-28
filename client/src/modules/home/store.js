@@ -17,6 +17,7 @@ export default {
   },
   actions: {
     setActiveLanguage(context, payload) {
+      window.localStorage.setItem("lang", payload);
       context.commit("setActiveLanguage", payload);
     },
   },

@@ -4,6 +4,21 @@
   </div>
 </template>
 
+<script>
+import { onMounted } from "vue";
+import { useStore } from "vuex";
+
+export default {
+  setup() {
+    const store = useStore();
+    onMounted(() => {
+      const language = window.localStorage.getItem("lang") || "fr";
+      store.dispatch("language/setActiveLanguage", language);
+    });
+  },
+};
+</script>
+
 <style lang="scss">
 @use "./assets/styles/index.scss" as *;
 @include css-reset();

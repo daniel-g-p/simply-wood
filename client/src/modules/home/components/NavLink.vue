@@ -1,7 +1,7 @@
 <template>
-  <a :href="link">
+  <router-link :to="route">
     <div class="link" :class="linkClass">{{ label }}</div>
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
         return ["gold", "blue"].includes(value);
       },
     },
-    link: {
+    routeName: {
       type: String,
       required: true,
     },
@@ -30,7 +30,10 @@ export default {
         ? { "link--gold": true }
         : { "link--blue": true };
     });
-    return { linkClass };
+    const route = computed(() => {
+      return { name: props.routeName };
+    });
+    return { linkClass, route };
   },
 };
 </script>

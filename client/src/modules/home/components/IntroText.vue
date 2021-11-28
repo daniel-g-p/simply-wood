@@ -2,10 +2,30 @@
   <div class="intro">
     <h1 class="intro__heading">Simply Wood</h1>
     <p class="intro__text">
-      Bienvenue chez Simply Wood, que pouvons-nous faire pour vous?
+      {{ text }}
     </p>
   </div>
 </template>
+
+<script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+import international from "../../../internationalization/index.js";
+
+export default {
+  setup() {
+    const store = useStore();
+    const activeLanguage = computed(() => {
+      return store.getters["language/activeLanguage"];
+    });
+    const text = computed(() => {
+      return international(activeLanguage.value, "home", "text");
+    });
+    return { text };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 @use "../../../assets/styles/index.scss" as *;

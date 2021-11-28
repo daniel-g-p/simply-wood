@@ -15,7 +15,7 @@
             v-for="link in links"
             :key="link.label"
             :label="link.label"
-            :link="link.address"
+            :route-name="link.routeName"
             color="blue"
           ></nav-link>
         </nav>
@@ -26,6 +26,9 @@
 
 <script>
 import { ref, computed } from "vue";
+import { useStore } from "vuex";
+
+import international from "../../../internationalization/index.js";
 
 import NavToggle from "./NavToggle.vue";
 import NavLink from "./NavLink.vue";
@@ -38,12 +41,13 @@ export default {
     LanguageToggle,
   },
   setup() {
-    const links = [
-      { label: "A propos", address: "/" },
-      { label: "Nos créations", address: "/" },
-      { label: "Avis de nos clients", address: "/" },
-      { label: "Contact", address: "/" },
-    ];
+    const store = useStore();
+    const activeLanguage = computed(() => {
+      return store.getters["language/activeLanguage"];
+    });
+    const links = computed(() => {
+      return international(activeLanguage.value, "home", "nav");
+    });
     const menuOpen = ref(false);
     const menuClass = computed(() => {
       return { "menu--closed": !menuOpen.value };
