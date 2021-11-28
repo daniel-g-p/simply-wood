@@ -21,6 +21,7 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   props: {
@@ -35,6 +36,7 @@ export default {
   setup(props) {
     const buttons = ["fr", "nl", "de", "en"];
     const store = useStore();
+    const router = useRouter();
     const toggleColor = computed(() => {
       return props.color === "gold"
         ? { "language--gold": true }
@@ -44,7 +46,9 @@ export default {
       return store.getters["language/activeLanguage"];
     });
     const setLanguage = (language) => {
+      console.log(language);
       store.dispatch("language/setActiveLanguage", language);
+      router.push({ name: `${language}Home` });
     };
     return { buttons, toggleColor, activeLanguage, setLanguage };
   },

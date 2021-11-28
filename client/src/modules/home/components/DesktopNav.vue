@@ -16,7 +16,7 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-import international from "../../../internationalization/index.js";
+import international from "../../../international.js";
 
 import NavLink from "./NavLink.vue";
 import LanguageToggle from "./LanguageToggle.vue";

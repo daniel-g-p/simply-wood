@@ -1,7 +1,7 @@
 export default {
   home: {
     text: "Willkommen bei Simply Wood, wie können wir Ihnen helfen?",
-    route: { path: "/", routeName: "deHome" },
+    route: { path: "", routeName: "deHome" },
     nav: [
       { label: "Über Uns", path: "ueber-uns", routeName: "deAbout" },
       { label: "Unsere Dienste", path: "dienste", routeName: "deImages" },

@@ -1,4 +1,4 @@
-import international from "../../internationalization/index.js";
+import international from "../../international.js";
 
 import store from "../../store.js";
 
@@ -6,11 +6,16 @@ const router = {
   path: "/",
   component: () => import("./HomeModule.vue"),
   beforeEnter(to, _from, next) {
-    const lang = to.fullPath.split("/")[1];
-    if (lang) {
-      store.dispatch("language/setActiveLanguage", lang);
+    if (to.fullPath === "/") {
+      const lang = store.getters["language/activeLanguage"];
+      next({ name: `${lang}Home` });
+    } else {
+      const lang = to.fullPath.split("/")[1];
+      if (lang) {
+        store.dispatch("language/setActiveLanguage", lang);
+      }
+      next();
     }
-    next();
   },
   children: [],
 };
@@ -39,7 +44,7 @@ const internationalRoute = (
       return route.routeName === `${language}${routeBaseName}`;
     });
     routerObject.children.push({
-      path: `/${language}${route.path}`,
+      path: `${language}/${route.path}`,
       name: `${route.routeName}`,
       component: () => import(`${componentPath}`),
     });

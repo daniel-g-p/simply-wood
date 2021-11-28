@@ -28,7 +28,7 @@
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
-import international from "../../../internationalization/index.js";
+import international from "../../../international.js";
 
 import NavToggle from "./NavToggle.vue";
 import NavLink from "./NavLink.vue";

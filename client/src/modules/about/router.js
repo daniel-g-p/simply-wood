@@ -1,4 +1,4 @@
-import international from "../../internationalization/index.js";
+import international from "../../international.js";
 
 import store from "../../store.js";
 
@@ -25,8 +25,6 @@ const getRouteData = () => {
   return data;
 };
 
-console.log(getRouteData());
-
 const internationalRoute = (
   routerObject,
   routeData,
@@ -39,7 +37,7 @@ const internationalRoute = (
       return route.routeName === `${language}${routeBaseName}`;
     });
     routerObject.children.push({
-      path: `/${language}${route.path}`,
+      path: `${language}/${route.path}`,
       name: `${route.routeName}`,
       component: () => import(`${componentPath}`),
     });

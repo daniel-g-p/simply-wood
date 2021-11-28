@@ -11,7 +11,7 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-import international from "../../../internationalization/index.js";
+import international from "../../../international.js";
 
 export default {
   setup() {

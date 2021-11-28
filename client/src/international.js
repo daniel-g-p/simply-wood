@@ -1,7 +1,7 @@
-import fr from "./data/fr.js";
-import nl from "./data/nl.js";
-import de from "./data/de.js";
-import en from "./data/en.js";
+import fr from "./locales/fr.js";
+import nl from "./locales/nl.js";
+import de from "./locales/de.js";
+import en from "./locales/en.js";
 
 const data = { fr, nl, de, en };
 
