@@ -98,24 +98,10 @@ export default {
   }
 }
 .transition {
-  &__page {
-    &--enter-active,
-    &--leave-active {
-      transition: opacity 1s ease;
-    }
-    &--enter-from,
-    &--leave-to {
-      opacity: 0;
-    }
-    &--enter-to,
-    &--leave-from {
-      opacity: 1;
-    }
-  }
   &__header,
   &__main {
     &--enter-active {
-      transition: transform 0.75s ease, opacity 1s ease;
+      transition: transform 0.75s ease, opacity 0.75s ease;
     }
     &--enter-from {
       opacity: 0;
