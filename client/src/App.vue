@@ -1,6 +1,10 @@
 <template>
   <div>
-    <router-view></router-view>
+    <router-view v-slot="slotProps">
+      <transition name="route-animation-" mode="out-in">
+        <component :is="slotProps.Component"></component>
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -31,10 +35,25 @@ export default {
 html {
   font: 100%/1 "Amiri", serif;
   color: $color-blue;
+  background-color: $color-blue;
   letter-spacing: 0.1em;
 }
 ::selection {
   background-color: $color-purple;
   color: $color-white;
+}
+.route-animation {
+  &--enter-active,
+  &--leave-active {
+    transition: opacity 0.5s ease;
+  }
+  &--enter-from,
+  &--leave-to {
+    opacity: 0;
+  }
+  &--enter-to,
+  &--leave-from {
+    opacity: 1;
+  }
 }
 </style>
