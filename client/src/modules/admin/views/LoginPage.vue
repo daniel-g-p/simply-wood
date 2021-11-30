@@ -52,6 +52,29 @@ export default {
       if (!password.value) {
         errors.password.hasError = true;
       }
+      if (!errors.email.hasError && !errors.password.hasError) {
+        const request = {
+          url: `${process.env.VUE_APP_API}/users/login`,
+          options: {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email.value,
+              password: password.value,
+            }),
+          },
+        };
+        fetch(request.url, request.options)
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      }
     };
     return { email, password, errors, submit };
   },

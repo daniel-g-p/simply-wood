@@ -5,6 +5,10 @@ import cookieParser from "cookie-parser";
 
 import config from "./config/index.js";
 
+import usersRouter from "./routes/users.js";
+
+import { errorHandler, catchAllRoute } from "./middleware/errors.js";
+
 const app = express();
 
 app.use(compression());
@@ -12,9 +16,10 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser(config.cookieSecret));
 app.use(express.json());
 
-app.all("/", (req, res, next) => {
-  return res.send("Hello World");
-});
+app.use("/api/users", usersRouter);
+
+app.use(errorHandler);
+app.use(catchAllRoute);
 
 const start = async () => {
   try {
