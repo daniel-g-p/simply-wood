@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 
 import config from "./config/index.js";
 
+import { connectToDatabase } from "./utilities/database.js";
+
 import usersRouter from "./routes/users.js";
 
 import { errorHandler, catchAllRoute } from "./middleware/errors.js";
@@ -23,6 +25,7 @@ app.use(catchAllRoute);
 
 const start = async () => {
   try {
+    await connectToDatabase();
     app.listen(config.port, () => {
       if (config.nodeEnv === "development") {
         console.log(`Server running on http://localhost:${config.port}`);
