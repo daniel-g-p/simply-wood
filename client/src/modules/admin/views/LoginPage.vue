@@ -45,13 +45,13 @@ export default {
       errors.password.hasError = false;
     });
     const submit = () => {
-      const emailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-      if (!email.value || !emailFormat.test(email.value)) {
-        errors.email.hasError = true;
-      }
-      if (!password.value) {
-        errors.password.hasError = true;
-      }
+      // const emailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      // if (!email.value || !emailFormat.test(email.value)) {
+      //   errors.email.hasError = true;
+      // }
+      // if (!password.value) {
+      //   errors.password.hasError = true;
+      // }
       if (!errors.email.hasError && !errors.password.hasError) {
         const request = {
           url: `${process.env.VUE_APP_API}/users/login`,
