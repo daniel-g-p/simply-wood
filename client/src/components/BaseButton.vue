@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :class="buttonColor">
+  <button class="button" :class="buttonColor" :disabled="disabled">
     <slot></slot>
   </button>
 </template>
@@ -14,6 +14,10 @@ export default {
       validator(value) {
         return ["blue", "gold", "purple", "red"].includes(value);
       },
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
@@ -75,6 +79,22 @@ export default {
       transform: translateY(-0.125rem);
       background-color: lighten($color-red, 5);
     }
+  }
+  &:disabled {
+    animation: blinking-button 2s infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes blinking-button {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0.5;
   }
 }
 </style>

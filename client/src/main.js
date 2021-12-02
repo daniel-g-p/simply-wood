@@ -6,6 +6,7 @@ import BasePage from "./components/BasePage.vue";
 import BaseLink from "./components/BaseLink.vue";
 import BaseTextbox from "./components/BaseTextbox.vue";
 import BaseButton from "./components/BaseButton.vue";
+import BaseAlert from "./components/BaseAlert.vue";
 
 import router from "./router.js";
 import store from "./store.js";
@@ -16,6 +17,7 @@ app.component("BasePage", BasePage);
 app.component("BaseLink", BaseLink);
 app.component("BaseTextbox", BaseTextbox);
 app.component("BaseButton", BaseButton);
+app.component("BaseAlert", BaseAlert);
 
 app.use(store);
 app.use(router);

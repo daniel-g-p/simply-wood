@@ -1,6 +1,7 @@
 import { condition, validate } from "../utilities/validation.js";
 import { db } from "../utilities/database.js";
 import { verifyHash } from "../utilities/argon2.js";
+import { signToken } from "../utilities/jwt.js";
 
 export default {
   validateLoginData: (email, password) => {
@@ -18,5 +19,8 @@ export default {
   },
   checkPassword: async (hash, password) => {
     return await verifyHash(hash, password);
+  },
+  signAuthenticationToken: (userId) => {
+    return signToken(userId);
   },
 };

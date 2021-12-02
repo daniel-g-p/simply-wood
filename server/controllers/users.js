@@ -1,21 +1,33 @@
 import users from "../services/users.js";
 
+import config from "../config/index.js";
+
 export default {
   login: async (req, res, next) => {
     const { email, password } = req.body;
     const { valid, data, error } = users.validateLoginData(email, password);
     if (!valid) {
-      return res.json({ message: error });
+      return res.status(400).json({ message: error });
     }
     const user = await users.findUserByEmail(data.email);
     if (!user) {
-      return res.json({ message: "Utilisateur pas trouvé." });
+      return res.status(404).json({ message: "Utilisateur pas trouvé." });
     }
     const correctPassword = await users.checkPassword(user.password, password);
     if (!correctPassword) {
-      return res.json({ message: "Mot de passe incorrecte." });
+      return res.status(403).json({ message: "Mot de passe incorrect." });
     }
-    // Authenticate user
-    return res.status(200).json({ ok: true });
+    const userId = user._id.toString();
+    const jwtToken = users.signAuthenticationToken(userId);
+    const cookieOptions = {
+      maxAge: 1000 * 60 * 60,
+      signed: true,
+      httpOnly: true,
+      secure: config.nodeEnv !== "development",
+    };
+    return res
+      .status(200)
+      .cookie("userId", jwtToken, cookieOptions)
+      .json({ ok: true });
   },
 };

@@ -17,15 +17,23 @@
       :error-message="errors.password.message"
       v-model="password"
     ></base-textbox>
-    <base-button :color="'purple'">S'identifier</base-button>
+    <base-button :color="'purple'" :disabled="buttonDisabled"
+      >S'identifier</base-button
+    >
+    <base-alert :visible="alert.visible" @close="closeAlert">{{
+      alert.text
+    }}</base-alert>
   </form>
 </template>
 
 <script>
 import { ref, reactive, watch } from "vue";
 
+import { useRouter } from "vue-router";
+
 export default {
   setup() {
+    const router = useRouter();
     const email = ref("");
     const password = ref("");
     const errors = reactive({
@@ -38,25 +46,37 @@ export default {
         message: "Mot de passe requis.",
       },
     });
+    const alert = reactive({
+      text: "",
+      visible: false,
+    });
+    const closeAlert = () => {
+      alert.visible = false;
+    };
     watch(email, () => {
       errors.email.hasError = false;
     });
     watch(password, () => {
       errors.password.hasError = false;
     });
+    const buttonDisabled = ref(false);
+    const toggleButton = () => {
+      buttonDisabled.value = !buttonDisabled.value;
+    };
     const submit = () => {
-      // const emailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-      // if (!email.value || !emailFormat.test(email.value)) {
-      //   errors.email.hasError = true;
-      // }
-      // if (!password.value) {
-      //   errors.password.hasError = true;
-      // }
+      const emailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      if (!email.value || !emailFormat.test(email.value)) {
+        errors.email.hasError = true;
+      }
+      if (!password.value) {
+        errors.password.hasError = true;
+      }
       if (!errors.email.hasError && !errors.password.hasError) {
         const request = {
           url: `${process.env.VUE_APP_API}/users/login`,
           options: {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -66,17 +86,34 @@ export default {
             }),
           },
         };
+        toggleButton();
         fetch(request.url, request.options)
           .then((res) => res.json())
           .then((res) => {
-            console.log(res);
+            if (res.ok) {
+              router.push("/");
+            } else {
+              alert.text = res.message;
+              alert.visible = true;
+            }
           })
-          .catch((res) => {
-            console.log(res);
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+            toggleButton();
           });
       }
     };
-    return { email, password, errors, submit };
+    return {
+      email,
+      password,
+      errors,
+      submit,
+      buttonDisabled,
+      alert,
+      closeAlert,
+    };
   },
 };
 </script>
