@@ -14,9 +14,6 @@
     $color-gold
   );
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
 }
 </style>

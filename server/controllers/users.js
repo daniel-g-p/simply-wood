@@ -18,7 +18,7 @@ export default {
       return res.status(403).json({ message: "Mot de passe incorrect." });
     }
     const userId = user._id.toString();
-    const jwtToken = users.signAuthenticationToken(userId);
+    const jwtToken = users.signJwtToken(userId);
     const cookieOptions = {
       maxAge: 1000 * 60 * 60,
       signed: true,
@@ -29,5 +29,10 @@ export default {
       .status(200)
       .cookie("userId", jwtToken, cookieOptions)
       .json({ ok: true });
+  },
+  checkLoginStatus: async (req, res, next) => {
+    const { userId } = req.signedCookies;
+    const verified = users.verifyJwtToken(userId);
+    return res.status(200).json({ ok: verified ? true : false });
   },
 };

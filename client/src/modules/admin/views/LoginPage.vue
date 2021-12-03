@@ -1,29 +1,31 @@
 <template>
-  <form class="login" @submit.prevent="submit" novalidate>
-    <h1 class="login__title">Identification</h1>
-    <base-textbox
-      :id="'email'"
-      :label="'Adresse email'"
-      :type="'email'"
-      :error="errors.email.hasError"
-      :error-message="errors.email.message"
-      v-model="email"
-    ></base-textbox>
-    <base-textbox
-      :id="'password'"
-      :label="'Mot de passe'"
-      :type="'password'"
-      :error="errors.password.hasError"
-      :error-message="errors.password.message"
-      v-model="password"
-    ></base-textbox>
-    <base-button :color="'purple'" :disabled="buttonDisabled"
-      >S'identifier</base-button
-    >
-    <base-alert :visible="alert.visible" @close="closeAlert">{{
-      alert.text
-    }}</base-alert>
-  </form>
+  <main class="login">
+    <form class="login__form" @submit.prevent="submit" novalidate>
+      <h1 class="login__title">Identification</h1>
+      <base-textbox
+        :id="'email'"
+        :label="'Adresse email'"
+        :type="'email'"
+        :error="errors.email.hasError"
+        :error-message="errors.email.message"
+        v-model="email"
+      ></base-textbox>
+      <base-textbox
+        :id="'password'"
+        :label="'Mot de passe'"
+        :type="'password'"
+        :error="errors.password.hasError"
+        :error-message="errors.password.message"
+        v-model="password"
+      ></base-textbox>
+      <base-button :color="'purple'" :disabled="buttonDisabled"
+        >S'identifier</base-button
+      >
+      <base-alert :visible="alert.visible" @close="closeAlert">{{
+        alert.text
+      }}</base-alert>
+    </form>
+  </main>
 </template>
 
 <script>
@@ -91,7 +93,7 @@ export default {
           .then((res) => res.json())
           .then((res) => {
             if (res.ok) {
-              router.push("/");
+              router.push({ name: "adminImages" });
             } else {
               alert.text = res.message;
               alert.visible = true;
@@ -122,10 +124,20 @@ export default {
 @use "../../../assets/styles/index.scss" as *;
 .login {
   width: 100%;
-  max-width: 20rem;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  &__form {
+    width: 100%;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2.5rem;
+  }
+  &__title {
+    font-size: 1.5rem;
+  }
 }
 </style>
