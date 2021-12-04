@@ -14,9 +14,9 @@ export const errorHandler = (error, req, res, next) => {
   if (config.nodeEnv === "development") {
     console.log(error);
   }
-  return res.status(500).send("Une erreur s'est produite.");
+  return res.status(500).json({ message: "Une erreur s'est produite." });
 };
 
 export const catchAllRoute = (req, res, next) => {
-  return res.status(400).send("URL non valide");
+  return res.status(400).send({ message: "URL non valide" });
 };

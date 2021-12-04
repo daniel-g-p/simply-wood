@@ -6,5 +6,6 @@
 @use "../../../assets/styles/index.scss" as *;
 .title {
   font-size: 2.25rem;
+  margin-bottom: 1rem;
 }
 </style>

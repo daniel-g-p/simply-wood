@@ -32,7 +32,17 @@ export default {
   },
   checkLoginStatus: async (req, res, next) => {
     const { userId } = req.signedCookies;
-    const verified = users.verifyJwtToken(userId);
-    return res.status(200).json({ ok: verified ? true : false });
+    const verifiedUserId = users.verifyJwtToken(userId);
+    if (!verifiedUserId) {
+      return res.status(403).json({ message: "Identification échouée." });
+    }
+    const userExists = await users.checkForUserId(verifiedUserId);
+    if (!userExists) {
+      return res
+        .status(404)
+        .clearCookie("userId")
+        .json({ message: "Utilisateur pas trouvé." });
+    }
+    return res.status(200).json({ ok: true });
   },
 };

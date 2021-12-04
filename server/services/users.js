@@ -25,5 +25,9 @@ export default {
   },
   verifyJwtToken: (userId) => {
     return verifyToken(userId);
-  }
+  },
+  checkForUserId: async (userId) => {
+    const user = await db.findById("users", userId, ["_id"]);
+    return user ? true : false;
+  },
 };

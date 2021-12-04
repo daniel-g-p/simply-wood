@@ -9,4 +9,8 @@ export default {
   jwtSecret: process.env.JWT_SECRET,
   dbUrl: process.env.DB_URL || "mongodb://localhost:27017",
   dbName: process.env.DB_NAME || "test",
+  cloudinaryName: process.env.CLOUDINARY_NAME,
+  cloudinaryUrl: process.env.CLOUDINARY_URL,
+  cloudinaryKey: process.env.CLOUDINARY_KEY,
+  cloudinarySecret: process.env.CLOUDINARY_SECRET,
 };

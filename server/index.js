@@ -8,6 +8,7 @@ import config from "./config/index.js";
 import { connectToDatabase } from "./utilities/database.js";
 
 import usersRouter from "./routes/users.js";
+import imagesRouter from "./routes/images.js";
 
 import { errorHandler, catchAllRoute } from "./middleware/errors.js";
 
@@ -19,6 +20,7 @@ app.use(cookieParser(config.cookieSecret));
 app.use(express.json());
 
 app.use("/api/users", usersRouter);
+app.use("/api/images", imagesRouter);
 
 app.use(errorHandler);
 app.use(catchAllRoute);
