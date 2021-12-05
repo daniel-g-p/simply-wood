@@ -1,7 +1,14 @@
 <template>
   <div class="category">
     <div class="category__select-box">
-      <select name="category" id="category" class="category__select">
+      <select
+        name="category"
+        id="category"
+        class="category__select"
+        :value="modelValue"
+        @change="setCategory"
+      >
+        <option disabled selected value>-- Catégorie --</option>
         <option
           v-for="category in categories"
           :key="category.tag"
@@ -38,12 +45,43 @@
 </template>
 
 <script>
+import { computed, onMounted } from "vue";
+import { useStore } from "vuex";
+
 export default {
   props: {
-    categories: {
-      type: Array,
+    modelValue: {
+      type: String,
       required: true,
     },
+  },
+  emits: ["update:modelValue"],
+  setup(props, { emit }) {
+    const store = useStore();
+    const categories = computed(() => {
+      return store.getters["admin/categories"];
+    });
+    const setCategory = (event) => {
+      emit("update:modelValue", event.target.value);
+    };
+    onMounted(() => {
+      const request = {
+        url: `${process.env.VUE_APP_API}/images/categories`,
+        options: { credentials: "include" },
+      };
+      fetch(request.url, request.options)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.categories) {
+            console.log(res.categories);
+            store.dispatch("admin/setCategories", res.categories);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+    return { categories, setCategory };
   },
 };
 </script>
@@ -68,7 +106,7 @@ export default {
     transition: background-color 0.25s ease;
     &:hover,
     &:focus {
-      background-color: darken($color-white, 2);
+      background-color: darken($color-white, 3);
     }
   }
   &__select-icon-box {
@@ -89,7 +127,7 @@ export default {
     cursor: pointer;
     &:hover,
     &:focus {
-      background-color: darken($color-white, 2);
+      background-color: darken($color-white, 3);
     }
   }
   &__icon {

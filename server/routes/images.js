@@ -13,4 +13,6 @@ router.get(
   tryCatch(controller.getImageCategories)
 );
 
+router.get("/categories/:categoryId", tryCatch(controller.getImagesInCategory));
+
 export default router;

@@ -2,6 +2,7 @@ import { connectToDatabase, db } from "./utilities/database.js";
 
 import newUser from "./models/user.js";
 import newCategory from "./models/category.js";
+import newImage from "./models/image.js";
 
 import cloudinary from "./utilities/cloudinary.js";
 import { hashString } from "./utilities/argon2.js";
@@ -9,34 +10,48 @@ import { hashString } from "./utilities/argon2.js";
 const seedAdmin = async (name, email, password) => {
   await db.delete("users", {});
   const hash = await hashString(password);
-  return await db.create("users", newUser(name, email, hash));
+  await db.create("users", newUser(name, email, hash));
+  console.log("Administrator seeded.");
 };
 
 const seedCategories = async (categoryNames) => {
   await db.delete("categories", {});
+  const categories = [];
   for (let categoryName of categoryNames) {
     const category = newCategory(categoryName);
-    await db.create("categories", category);
+    const { insertedId } = await db.create("categories", category);
+    categories.push(insertedId.toString());
   }
+  console.log("Categories seeded.");
+  return categories;
 };
 
-const seedImages = async () => {
-  // const images = await cloudinary.api.resources({  }, (error, data) => {
-  //   console.log(data);
-  //   console.log(error);
-  //   return data;
-  // });
+const seedImages = async (categoryIds) => {
+  const data = await cloudinary.api.resources((error, data) => {
+    if (error) {
+      console.log(error);
+    }
+  });
+  const { resources } = data;
+  const imageUrls = resources.map((resource) => resource.url);
+  for (let url of imageUrls) {
+    const randomIndex = Math.floor(Math.random() * categoryIds.length);
+    const image = newImage(categoryIds[randomIndex], url, "square");
+    await db.create("images", image);
+  }
+  console.log("Images seeded.");
 };
 
 const seed = async () => {
   try {
     await connectToDatabase();
-    // const images = await seedImages();
-    // console.log(images);
     await seedAdmin("Admin", "admin@simplywood.be", "admin");
-    console.log("Administrator seeded.");
-    await seedCategories(["Categorie1", "Categorie2", "Categorie3"]);
-    console.log("Categories seeded.");
+    const categoryIds = await seedCategories([
+      "Categorie1",
+      "Categorie2",
+      "Categorie3",
+    ]);
+    await seedImages(categoryIds);
     console.log("Database seeded.");
   } catch (error) {
     console.log(error);
