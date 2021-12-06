@@ -10,4 +10,13 @@ export default {
     const categoryImages = await images.getImagesByCategoryId(categoryId);
     return res.status(200).json({ images: categoryImages });
   },
+  setMainImage: async (req, res, next) => {
+    const { categoryId } = req.params;
+    const { imageUrl } = req.body;
+    const update = await images.updateMainImage(categoryId, imageUrl);
+    if (!update.acknowledged) {
+      return res.status(500).json({ message: "Modification échouée." });
+    }
+    return res.status(200).json({ ok: true });
+  },
 };

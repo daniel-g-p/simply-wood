@@ -28,6 +28,13 @@ export default {
     toggleLoader(state) {
       state.loaderActive = !state.loaderActive;
     },
+    updateMainImage(state, payload) {
+      const { categoryId, imageUrl } = payload;
+      const index = state.categories.findIndex((category) => {
+        return category._id === categoryId;
+      });
+      state.categories[index].mainImage = imageUrl;
+    },
   },
   actions: {
     setCategories(context, payload) {
@@ -38,6 +45,9 @@ export default {
     },
     toggleLoader(context) {
       context.commit("toggleLoader");
+    },
+    updateMainImage(context, payload) {
+      context.commit("updateMainImage", payload);
     },
   },
 };

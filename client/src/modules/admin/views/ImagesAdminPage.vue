@@ -1,5 +1,8 @@
 <template>
   <main class="images">
+    <base-alert :visible="alertData.active" @close="toggleAlert">{{
+      alertData.message
+    }}</base-alert>
     <admin-navigation></admin-navigation>
     <admin-title>Images</admin-title>
     <category-options v-model="activeCategory"></category-options>
@@ -9,6 +12,7 @@
         :key="image._id"
         :imageUrl="image.imageUrl"
         :isMainImage="image.imageUrl === mainImage"
+        @emit-error="toggleAlert"
       ></images-item>
     </div>
     <p v-else class="images__info-message">Aucune catégorie choisie.</p>
@@ -16,7 +20,7 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useStore } from "vuex";
 
 import AdminTitle from "../components/AdminTitle.vue";
@@ -32,6 +36,14 @@ export default {
     ImagesItem,
   },
   setup() {
+    const alertData = reactive({
+      active: false,
+      message: "",
+    });
+    const toggleAlert = (message) => {
+      alertData.message = message || "";
+      alertData.active = message ? true : false;
+    };
     const store = useStore();
     const activeCategory = ref("");
     const mainImage = computed(() => {
@@ -61,7 +73,7 @@ export default {
       store.dispatch("admin/setActiveCategory", value);
       fetchImages(value);
     });
-    return { activeCategory, images, mainImage };
+    return { activeCategory, images, mainImage, alertData, toggleAlert };
   },
 };
 </script>

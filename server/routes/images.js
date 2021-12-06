@@ -15,4 +15,10 @@ router.get(
 
 router.get("/categories/:categoryId", tryCatch(controller.getImagesInCategory));
 
+router.post(
+  "/categories/set-main-image/:categoryId",
+  tryCatch(isLoggedIn),
+  tryCatch(controller.setMainImage)
+);
+
 export default router;

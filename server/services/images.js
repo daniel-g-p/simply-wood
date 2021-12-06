@@ -7,4 +7,8 @@ export default {
   getImagesByCategoryId: async (categoryId) => {
     return await db.find("images", { categoryId });
   },
+  updateMainImage: async (categoryId, imageUrl) => {
+    const update = { mainImage: imageUrl };
+    return await db.updateById("categories", categoryId, update);
+  },
 };
