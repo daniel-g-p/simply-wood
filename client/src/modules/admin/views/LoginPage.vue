@@ -18,9 +18,7 @@
         :error-message="errors.password.message"
         v-model="password"
       ></base-textbox>
-      <base-button :color="'purple'" :disabled="buttonDisabled"
-        >S'identifier</base-button
-      >
+      <base-button :color="'purple'">S'identifier</base-button>
       <base-alert :visible="alert.visible" @close="closeAlert">{{
         alert.text
       }}</base-alert>
@@ -30,12 +28,13 @@
 
 <script>
 import { ref, reactive, watch } from "vue";
-
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 export default {
   setup() {
     const router = useRouter();
+    const store = useStore();
     const email = ref("");
     const password = ref("");
     const errors = reactive({
@@ -61,10 +60,6 @@ export default {
     watch(password, () => {
       errors.password.hasError = false;
     });
-    const buttonDisabled = ref(false);
-    const toggleButton = () => {
-      buttonDisabled.value = !buttonDisabled.value;
-    };
     const submit = () => {
       const emailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
       if (!email.value || !emailFormat.test(email.value)) {
@@ -88,7 +83,7 @@ export default {
             }),
           },
         };
-        toggleButton();
+        store.dispatch("admin/toggleLoader");
         fetch(request.url, request.options)
           .then((res) => res.json())
           .then((res) => {
@@ -103,7 +98,7 @@ export default {
             console.log(error);
           })
           .finally(() => {
-            toggleButton();
+            store.dispatch("admin/toggleLoader");
           });
       }
     };
@@ -112,7 +107,6 @@ export default {
       password,
       errors,
       submit,
-      buttonDisabled,
       alert,
       closeAlert,
     };

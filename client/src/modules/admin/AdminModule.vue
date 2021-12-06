@@ -1,5 +1,6 @@
 <template>
   <div class="admin">
+    <base-loader></base-loader>
     <router-view></router-view>
   </div>
 </template>

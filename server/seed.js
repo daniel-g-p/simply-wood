@@ -34,10 +34,13 @@ const seedImages = async (categoryIds) => {
   });
   const { resources } = data;
   const imageUrls = resources.map((resource) => resource.url);
-  for (let url of imageUrls) {
+  for (let i = 0; i < imageUrls.length; i++) {
     const randomIndex = Math.floor(Math.random() * categoryIds.length);
-    const image = newImage(categoryIds[randomIndex], url, "square");
+    const categoryId = categoryIds[randomIndex];
+    const url = imageUrls[i];
+    const image = newImage(categoryId, url, "square");
     await db.create("images", image);
+    await db.updateById("categories", categoryId, { mainImage: url });
   }
   console.log("Images seeded.");
 };

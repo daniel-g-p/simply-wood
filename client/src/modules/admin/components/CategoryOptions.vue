@@ -11,8 +11,8 @@
         <option disabled selected value>-- Catégorie --</option>
         <option
           v-for="category in categories"
-          :key="category.tag"
-          :value="category.tag"
+          :key="category._id"
+          :value="category._id"
         >
           {{ category.name }}
         </option>
@@ -73,7 +73,6 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.categories) {
-            console.log(res.categories);
             store.dispatch("admin/setCategories", res.categories);
           }
         })

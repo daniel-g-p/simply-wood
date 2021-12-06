@@ -4,39 +4,47 @@
     <admin-title>Images</admin-title>
     <category-options v-model="activeCategory"></category-options>
     <div class="images__list" v-if="images.length">
-      <div class="images__item" v-for="image in images" :key="image._id">
-        <img :src="image.imageUrl" alt="Image" class="images__image" />
-      </div>
+      <images-item
+        v-for="image in images"
+        :key="image._id"
+        :imageUrl="image.imageUrl"
+        :isMainImage="image.imageUrl === mainImage"
+      ></images-item>
     </div>
     <p v-else class="images__info-message">Aucune catégorie choisie.</p>
   </main>
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 
 import AdminTitle from "../components/AdminTitle.vue";
 import AdminNavigation from "../components/AdminNavigation.vue";
 import CategoryOptions from "../components/CategoryOptions.vue";
+import ImagesItem from "../components/ImagesItem.vue";
 
 export default {
   components: {
     AdminTitle,
     AdminNavigation,
     CategoryOptions,
+    ImagesItem,
   },
   setup() {
     const store = useStore();
     const activeCategory = ref("");
-    const images = ref([]);
-    watch(activeCategory, (value) => {
+    const mainImage = computed(() => {
       const categories = store.getters["admin/categories"];
-      const { _id } = categories.find((category) => {
-        return category.tag.toString() === value;
+      const { mainImage } = categories.find((category) => {
+        return category._id === activeCategory.value;
       });
-      const categoryId = _id.toString();
+      return mainImage;
+    });
+    const images = ref([]);
+    const fetchImages = (categoryId) => {
       const requestUrl = `${process.env.VUE_APP_API}/images/categories/${categoryId}`;
+      store.dispatch("admin/toggleLoader");
       fetch(requestUrl)
         .then((res) => res.json())
         .then((res) => {
@@ -44,9 +52,16 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          store.dispatch("admin/toggleLoader");
         });
+    };
+    watch(activeCategory, (value) => {
+      store.dispatch("admin/setActiveCategory", value);
+      fetchImages(value);
     });
-    return { activeCategory, images };
+    return { activeCategory, images, mainImage };
   },
 };
 </script>
