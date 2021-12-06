@@ -1,3 +1,4 @@
+import image from "../models/image.js";
 import images from "../services/images.js";
 
 export default {
@@ -16,6 +17,14 @@ export default {
     const update = await images.updateMainImage(categoryId, imageUrl);
     if (!update.acknowledged) {
       return res.status(500).json({ message: "Modification échouée." });
+    }
+    return res.status(200).json({ ok: true });
+  },
+  deleteImage: async (req, res, next) => {
+    const { imageId } = req.body;
+    const deleted = await images.deleteImageById(imageId);
+    if (!deleted) {
+      return res.status(500).json({ message: "Suppression échouée." });
     }
     return res.status(200).json({ ok: true });
   },

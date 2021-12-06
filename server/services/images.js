@@ -11,4 +11,7 @@ export default {
     const update = { mainImage: imageUrl };
     return await db.updateById("categories", categoryId, update);
   },
+  deleteImageById: async (imageId) => {
+    return await db.deleteById("images", imageId);
+  },
 };

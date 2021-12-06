@@ -14,7 +14,7 @@
           />
         </svg>
       </button>
-      <button class="item__button">
+      <button class="item__button" @click="deleteImage">
         <svg
           class="item__icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -39,6 +39,10 @@ import { useStore } from "vuex";
 
 export default {
   props: {
+    imageId: {
+      type: String,
+      required: true,
+    },
     imageUrl: {
       type: String,
       required: true,
@@ -48,7 +52,7 @@ export default {
       required: true,
     },
   },
-  emits: ["emit-error"],
+  emits: ["emit-error", "delete-image"],
   setup(props, { emit }) {
     const store = useStore();
     const activeCategory = computed(() => {
@@ -91,7 +95,35 @@ export default {
           store.dispatch("admin/toggleLoader");
         });
     };
-    return { isMainImageClass, makeFavorite };
+    const deleteImage = () => {
+      const { imageId } = props;
+      const url = `${process.env.VUE_APP_API}/images/${imageId}`;
+      const options = {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageId }),
+      };
+      store.dispatch("admin/toggleLoader");
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            emit("delete-image", imageId);
+          } else {
+            emit("emit-error", res.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          store.dispatch("admin/toggleLoader");
+        });
+    };
+    return { isMainImageClass, makeFavorite, deleteImage };
   },
 };
 </script>

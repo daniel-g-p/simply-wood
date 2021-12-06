@@ -10,9 +10,11 @@
       <images-item
         v-for="image in images"
         :key="image._id"
+        :imageId="image._id"
         :imageUrl="image.imageUrl"
         :isMainImage="image.imageUrl === mainImage"
         @emit-error="toggleAlert"
+        @delete-image="deleteImage"
       ></images-item>
     </div>
     <p v-else class="images__info-message">Aucune catégorie choisie.</p>
@@ -73,7 +75,20 @@ export default {
       store.dispatch("admin/setActiveCategory", value);
       fetchImages(value);
     });
-    return { activeCategory, images, mainImage, alertData, toggleAlert };
+    const deleteImage = (imageId) => {
+      const index = images.value.findIndex((image) => {
+        return image._id === imageId;
+      });
+      images.value.splice(index, 1);
+    };
+    return {
+      activeCategory,
+      images,
+      mainImage,
+      alertData,
+      toggleAlert,
+      deleteImage,
+    };
   },
 };
 </script>

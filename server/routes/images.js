@@ -21,4 +21,10 @@ router.post(
   tryCatch(controller.setMainImage)
 );
 
+router.delete(
+  "/:imageId",
+  tryCatch(isLoggedIn),
+  tryCatch(controller.deleteImage)
+);
+
 export default router;
