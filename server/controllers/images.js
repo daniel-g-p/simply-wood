@@ -2,6 +2,12 @@ import image from "../models/image.js";
 import images from "../services/images.js";
 
 export default {
+  addImages: async (req, res, next) => {
+    const { categoryId } = req.params;
+    const { files } = req;
+    await images.uploadImages(categoryId, files);
+    return res.status(200).json({ ok: true });
+  },
   getImageCategories: async (req, res, next) => {
     const categories = await images.getAllImageCategories();
     return res.status(200).json({ categories });

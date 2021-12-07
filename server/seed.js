@@ -4,7 +4,7 @@ import newUser from "./models/user.js";
 import newCategory from "./models/category.js";
 import newImage from "./models/image.js";
 
-import cloudinary from "./utilities/cloudinary.js";
+import { getAllResources } from "./utilities/cloudinary.js";
 import { hashString } from "./utilities/argon2.js";
 
 const seedAdmin = async (name, email, password) => {
@@ -27,11 +27,7 @@ const seedCategories = async (categoryNames) => {
 };
 
 const seedImages = async (categoryIds) => {
-  const data = await cloudinary.api.resources((error, data) => {
-    if (error) {
-      console.log(error);
-    }
-  });
+  const data = await getAllResources();
   const { resources } = data;
   const imageUrls = resources.map((resource) => resource.url);
   for (let i = 0; i < imageUrls.length; i++) {

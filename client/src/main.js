@@ -8,6 +8,7 @@ import BaseTextbox from "./components/BaseTextbox.vue";
 import BaseButton from "./components/BaseButton.vue";
 import BaseAlert from "./components/BaseAlert.vue";
 import BaseLoader from "./components/BaseLoader.vue";
+import BaseModal from "./components/BaseModal.vue";
 
 import router from "./router.js";
 import store from "./store.js";
@@ -20,6 +21,7 @@ app.component("BaseTextbox", BaseTextbox);
 app.component("BaseButton", BaseButton);
 app.component("BaseAlert", BaseAlert);
 app.component("BaseLoader", BaseLoader);
+app.component("BaseModal", BaseModal);
 
 app.use(store);
 app.use(router);

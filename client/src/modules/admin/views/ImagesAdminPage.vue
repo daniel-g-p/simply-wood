@@ -3,10 +3,17 @@
     <base-alert :visible="alertData.active" @close="toggleAlert">{{
       alertData.message
     }}</base-alert>
+    <base-modal :open="addImageModalOpen" @close="toggleAddImageModal">
+      <add-images-form></add-images-form>
+    </base-modal>
     <admin-navigation></admin-navigation>
     <admin-title>Images</admin-title>
     <category-options v-model="activeCategory"></category-options>
     <div class="images__list" v-if="images.length">
+      <add-images-button
+        :categoryId="activeCategory"
+        @add-images="toggleAddImageModal"
+      ></add-images-button>
       <images-item
         v-for="image in images"
         :key="image._id"
@@ -29,6 +36,8 @@ import AdminTitle from "../components/AdminTitle.vue";
 import AdminNavigation from "../components/AdminNavigation.vue";
 import CategoryOptions from "../components/CategoryOptions.vue";
 import ImagesItem from "../components/ImagesItem.vue";
+import AddImagesButton from "../components/AddImagesButton.vue";
+import AddImagesForm from "../components/AddImagesForm.vue";
 
 export default {
   components: {
@@ -36,16 +45,10 @@ export default {
     AdminNavigation,
     CategoryOptions,
     ImagesItem,
+    AddImagesButton,
+    AddImagesForm,
   },
   setup() {
-    const alertData = reactive({
-      active: false,
-      message: "",
-    });
-    const toggleAlert = (message) => {
-      alertData.message = message || "";
-      alertData.active = message ? true : false;
-    };
     const store = useStore();
     const activeCategory = ref("");
     const mainImage = computed(() => {
@@ -56,6 +59,18 @@ export default {
       return mainImage;
     });
     const images = ref([]);
+    const alertData = reactive({
+      active: false,
+      message: "",
+    });
+    const toggleAlert = (message) => {
+      alertData.message = message || "";
+      alertData.active = message ? true : false;
+    };
+    const addImageModalOpen = ref(false);
+    const toggleAddImageModal = () => {
+      addImageModalOpen.value = !addImageModalOpen.value;
+    };
     const fetchImages = (categoryId) => {
       const requestUrl = `${process.env.VUE_APP_API}/images/categories/${categoryId}`;
       store.dispatch("admin/toggleLoader");
@@ -87,6 +102,8 @@ export default {
       mainImage,
       alertData,
       toggleAlert,
+      addImageModalOpen,
+      toggleAddImageModal,
       deleteImage,
     };
   },

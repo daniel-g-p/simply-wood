@@ -30,7 +30,7 @@
         </svg>
       </div>
     </div>
-    <button class="category__add">
+    <button class="category__add" @click="addCategory">
       <svg
         class="category__icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ export default {
       required: true,
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "add-image"],
   setup(props, { emit }) {
     const store = useStore();
     const categories = computed(() => {
@@ -63,6 +63,9 @@ export default {
     });
     const setCategory = (event) => {
       emit("update:modelValue", event.target.value);
+    };
+    const addCategory = () => {
+      emit("add-category");
     };
     onMounted(() => {
       const request = {
@@ -80,7 +83,7 @@ export default {
           console.log(error);
         });
     });
-    return { categories, setCategory };
+    return { categories, setCategory, addCategory };
   },
 };
 </script>

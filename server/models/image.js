@@ -1,8 +1,7 @@
-export default (categoryId, imageUrl, format) => {
+export default (categoryId, imageUrl) => {
   return {
     categoryId,
     imageUrl,
-    format,
     timestamp: new Date(),
   };
 };

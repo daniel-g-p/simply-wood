@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { tryCatch } from "../middleware/errors.js";
 import { isLoggedIn } from "../middleware/authorization.js";
+import { uploadFiles } from "../middleware/multer.js";
 
 import controller from "../controllers/images.js";
 
@@ -14,6 +15,12 @@ router.get(
 );
 
 router.get("/categories/:categoryId", tryCatch(controller.getImagesInCategory));
+
+router.post(
+  "/upload-images/:categoryId",
+  uploadFiles,
+  tryCatch(controller.addImages)
+);
 
 router.post(
   "/categories/set-main-image/:categoryId",

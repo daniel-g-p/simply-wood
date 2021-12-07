@@ -4,12 +4,11 @@
       <div class="alert" v-if="visible">
         <div class="alert__box">
           <p class="alert__text"><slot></slot></p>
-          <button class="alert__button">
+          <button class="alert__button" @click="closeAlert">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="alert__icon"
               viewBox="0 0 16 16"
-              @click="closeModal"
             >
               <path
                 d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"
@@ -35,10 +34,10 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    const closeModal = () => {
+    const closeAlert = () => {
       emit("close");
     };
-    return { closeModal };
+    return { closeAlert };
   },
 };
 </script>
