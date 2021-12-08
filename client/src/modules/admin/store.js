@@ -37,8 +37,21 @@ export default {
     },
   },
   actions: {
-    setCategories(context, payload) {
-      context.commit("setCategories", payload);
+    setCategories(context) {
+      const request = {
+        url: `${process.env.VUE_APP_API}/images/categories`,
+        options: { credentials: "include" },
+      };
+      fetch(request.url, request.options)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.categories) {
+            context.commit("setCategories", res.categories);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     setActiveCategory(context, payload) {
       context.commit("setActiveCategory", payload);

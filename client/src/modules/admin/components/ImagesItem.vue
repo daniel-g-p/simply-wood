@@ -96,6 +96,10 @@ export default {
         });
     };
     const deleteImage = () => {
+      if (props.isMainImage) {
+        emit("emit-error", "Impossible de supprimer l'image principale.");
+        return;
+      }
       const { imageId } = props;
       const url = `${process.env.VUE_APP_API}/images/${imageId}`;
       const options = {

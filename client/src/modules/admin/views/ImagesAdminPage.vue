@@ -9,10 +9,11 @@
     <admin-navigation></admin-navigation>
     <admin-title>Images</admin-title>
     <category-options v-model="activeCategory"></category-options>
-    <div class="images__list" v-if="images.length">
+    <div class="images__list" v-if="activeCategory">
       <add-images-button
         :categoryId="activeCategory"
-        @add-images="toggleAddImageModal"
+        @add-images="fetchImages"
+        @failed="toggleAlert"
       ></add-images-button>
       <images-item
         v-for="image in images"
@@ -71,8 +72,8 @@ export default {
     const toggleAddImageModal = () => {
       addImageModalOpen.value = !addImageModalOpen.value;
     };
-    const fetchImages = (categoryId) => {
-      const requestUrl = `${process.env.VUE_APP_API}/images/categories/${categoryId}`;
+    const fetchImages = () => {
+      const requestUrl = `${process.env.VUE_APP_API}/images/categories/${activeCategory.value}`;
       store.dispatch("admin/toggleLoader");
       fetch(requestUrl)
         .then((res) => res.json())
@@ -88,13 +89,23 @@ export default {
     };
     watch(activeCategory, (value) => {
       store.dispatch("admin/setActiveCategory", value);
-      fetchImages(value);
+      fetchImages();
     });
     const deleteImage = (imageId) => {
-      const index = images.value.findIndex((image) => {
-        return image._id === imageId;
-      });
-      images.value.splice(index, 1);
+      const request = {
+        url: `${process.env.VUE_APP_API}/images/${imageId}`,
+        options: { method: "DELETE", credentials: "include" },
+      };
+      store.dispatch("admin/toggleLoader");
+      fetch(request.url, request.options)
+        .then(() => fetchImages())
+        .catch((error) => {
+          console.log(error);
+          toggleAlert(error.message);
+        })
+        .finally(() => {
+          store.dispatch("admin/toggleLoader");
+        });
     };
     return {
       activeCategory,
@@ -105,6 +116,7 @@ export default {
       addImageModalOpen,
       toggleAddImageModal,
       deleteImage,
+      fetchImages,
     };
   },
 };

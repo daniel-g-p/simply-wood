@@ -39,3 +39,15 @@ export const uploadImage = async (buffer) => {
       console.log(error);
     });
 };
+
+export const deleteImage = async (publicId) => {
+  return new Promise((resolve, reject) => {
+    try {
+      cloudinary.uploader.destroy(publicId, (error, result) => {
+        resolve(result);
+      });
+    } catch (error) {
+      console.log("ERROR", error);
+    }
+  });
+};

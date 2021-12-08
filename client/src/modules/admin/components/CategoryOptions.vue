@@ -68,20 +68,7 @@ export default {
       emit("add-category");
     };
     onMounted(() => {
-      const request = {
-        url: `${process.env.VUE_APP_API}/images/categories`,
-        options: { credentials: "include" },
-      };
-      fetch(request.url, request.options)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.categories) {
-            store.dispatch("admin/setCategories", res.categories);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      store.dispatch("admin/setCategories");
     });
     return { categories, setCategory, addCategory };
   },

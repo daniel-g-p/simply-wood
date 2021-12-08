@@ -28,10 +28,12 @@ export default {
   },
   deleteImage: async (req, res, next) => {
     const { imageId } = req.body;
-    const deleted = await images.deleteImageById(imageId);
-    if (!deleted) {
+    const result = await images.deleteImageById(imageId);
+    if (!result) {
+      console.log(result);
       return res.status(500).json({ message: "Suppression échouée." });
     }
+    console.log("ALL GOOD");
     return res.status(200).json({ ok: true });
   },
 };

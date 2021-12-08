@@ -37,8 +37,8 @@ export default {
       required: true,
     },
   },
-  //   emits: ["add-images"],
-  setup(props) {
+  emits: ["add-images", "failed"],
+  setup(props, { emit }) {
     const store = useStore();
     const uploadImages = (event) => {
       const { files } = event.target;
@@ -57,7 +57,11 @@ export default {
       fetch(request.url, request.options)
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
+          if (res.ok) {
+            emit("add-images");
+          } else {
+            emit("failed", res.message);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -78,13 +82,19 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 100%;
   transition: background-color 0.25s ease;
   cursor: pointer;
+  position: relative;
   &:hover,
   &:focus {
     background-color: $color-grey-light;
   }
   &__content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
   }
   &__input {
