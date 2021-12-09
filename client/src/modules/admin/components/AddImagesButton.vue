@@ -50,6 +50,7 @@ export default {
         url: `${process.env.VUE_APP_API}/images/upload-images/${props.categoryId}`,
         options: {
           method: "POST",
+          credentials: "include",
           body: formData,
         },
       };

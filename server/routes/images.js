@@ -8,29 +8,22 @@ import controller from "../controllers/images.js";
 
 const router = Router();
 
-router.get(
-  "/categories",
-  tryCatch(isLoggedIn),
-  tryCatch(controller.getImageCategories)
-);
+router
+  .route("/categories")
+  .get(tryCatch(isLoggedIn), tryCatch(controller.getImageCategories))
+  .post(tryCatch(isLoggedIn), tryCatch(controller.addCategory));
 
-router.post(
-  "/categories",
-  tryCatch(isLoggedIn),
-  tryCatch(controller.addCategory)
-);
+router
+  .route("/categories/:categoryId")
+  .get(tryCatch(controller.getImagesInCategory))
+  .put(tryCatch(isLoggedIn), tryCatch(controller.editCategoryName))
+  .delete(tryCatch(isLoggedIn), tryCatch(controller.deleteCategory));
 
-router.get("/categories/:categoryId", tryCatch(controller.getImagesInCategory));
-
-router.put(
-  "/categories/:categoryId",
-  tryCatch(isLoggedIn),
-  tryCatch(controller.editCategoryName)
-);
 
 router.post(
   "/upload-images/:categoryId",
   uploadFiles,
+  tryCatch(isLoggedIn),
   tryCatch(controller.addImages)
 );
 

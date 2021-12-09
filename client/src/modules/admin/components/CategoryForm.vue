@@ -1,7 +1,11 @@
 <template>
   <base-modal :open="mode ? true : false" @close="closeModal">
     <form class="form" @submit.prevent="submitForm">
+      <p v-if="watchMode === 'delete'" class="form__delete">
+        Es-tu sûr de vouloir supprimer cette catégorie et toutes ses images?
+      </p>
       <base-textbox
+        v-else
         :id="'categoryName'"
         :label="inputLabel"
         v-model="input"
@@ -14,6 +18,7 @@
 <script>
 import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   props: {
@@ -32,6 +37,7 @@ export default {
   emits: ["close", "failed"],
   setup(props, { emit }) {
     const store = useStore();
+    const router = useRouter();
     const input = ref("");
     const watchMode = computed(() => {
       return props.mode;
@@ -73,29 +79,41 @@ export default {
       emit("close");
     };
     const submitForm = () => {
-      if (!input.value) {
+      const isDeleteMode = watchMode.value === "delete";
+      if (!input.value && !isDeleteMode) {
         return;
       }
       const isAddMode = watchMode.value === "add";
-      const request = {
-        url: isAddMode
-          ? `${process.env.VUE_APP_API}/images/categories`
-          : `${process.env.VUE_APP_API}/images/categories/${props.categoryId}`,
-        options: {
-          method: isAddMode ? "POST" : "PUT",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ categoryName: input.value }),
-        },
-      };
+      const request = isDeleteMode
+        ? {
+            url: `${process.env.VUE_APP_API}/images/categories/${props.categoryId}`,
+            options: {
+              method: "DELETE",
+              credentials: "include",
+            },
+          }
+        : {
+            url: isAddMode
+              ? `${process.env.VUE_APP_API}/images/categories`
+              : `${process.env.VUE_APP_API}/images/categories/${props.categoryId}`,
+            options: {
+              method: isAddMode ? "POST" : "PUT",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ categoryName: input.value }),
+            },
+          };
       closeModal();
       store.dispatch("admin/toggleLoader");
       fetch(request.url, request.options)
         .then((res) => res.json())
         .then((res) => {
           if (res.ok) {
+            if (isDeleteMode) {
+              router.go();
+            }
             store.dispatch("admin/setCategories");
           } else {
             emit("failed", res.message);
@@ -108,7 +126,7 @@ export default {
           store.dispatch("admin/toggleLoader");
         });
     };
-    return { buttonText, closeModal, input, inputLabel, submitForm };
+    return { watchMode, buttonText, closeModal, input, inputLabel, submitForm };
   },
 };
 </script>

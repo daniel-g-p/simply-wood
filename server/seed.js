@@ -17,12 +17,12 @@ const seedAdmin = async (name, email, password) => {
 const seedCategories = async (categoryNames) => {
   await db.delete("categories", {});
   const categories = [];
-  for (let categoryName of categoryNames) {
-    const category = newCategory(categoryName);
-    const { insertedId } = await db.create("categories", category);
-    categories.push(insertedId.toString());
-  }
-  console.log("Categories seeded.");
+  // for (let categoryName of categoryNames) {
+  //   const category = newCategory(categoryName);
+  //   const { insertedId } = await db.create("categories", category);
+  //   categories.push(insertedId.toString());
+  // }
+  // console.log("Categories seeded.");
   return categories;
 };
 

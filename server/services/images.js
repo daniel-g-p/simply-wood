@@ -40,4 +40,14 @@ export default {
     }
     return await db.deleteById("images", imageId);
   },
+  deleteImagesByCategory: async (categoryId) => {
+    const images = await db.find("images", { categoryId }, ["publicId"]);
+    for (let image of images) {
+      await deleteImage(image.publicId);
+    }
+    return await db.delete("images", { categoryId });
+  },
+  deleteCategory: async (categoryId) => {
+    return await db.deleteById("images");
+  },
 };

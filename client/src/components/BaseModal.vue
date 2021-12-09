@@ -53,6 +53,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
   transition: opacity 0.25s ease;
   &--enter-from,
   &--leave-to {
@@ -66,7 +67,9 @@ export default {
     background-color: $color-white;
     padding: 1rem;
     min-width: 16rem;
+    max-width: 24rem;
     position: relative;
+    line-height: 1.5;
   }
   &__button {
     background-color: $color-white;

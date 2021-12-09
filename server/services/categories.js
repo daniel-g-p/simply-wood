@@ -18,4 +18,7 @@ export default {
     const update = { name: categoryName, tag };
     return await db.updateById("categories", categoryId, update);
   },
+  deleteCategory: async (categoryId) => {
+    return await db.deleteById("categories", categoryId);
+  },
 };

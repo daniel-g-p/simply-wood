@@ -64,4 +64,13 @@ export default {
     }
     return res.status(200).json({ ok: true });
   },
+  deleteCategory: async (req, res, next) => {
+    const { categoryId } = req.params;
+    const imagesDeleted = await images.deleteImagesByCategory(categoryId);
+    const categoryDeleted = await categories.deleteCategory(categoryId);
+    if (!imagesDeleted.acknowledged || !categoryDeleted.acknowledged) {
+      return res.status(500).json({ message: "Une erreur s'est produite." });
+    }
+    return res.status(200).json({ ok: true });
+  },
 };
