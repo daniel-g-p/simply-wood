@@ -12,12 +12,28 @@ export default {
     const { categoryName } = req.body;
     const isAvailable = await categories.categoryIsAvailable(categoryName);
     if (!isAvailable) {
-      return res
-        .status(400)
-        .json({ message: "Il existe déjà une catégorie avec ce nom." });
+      const message = "Il existe déjà une catégorie avec ce nom.";
+      return res.status(400).json({ message });
     }
     const insertion = await categories.addCategory(categoryName);
     if (!insertion.acknowledged) {
+      return res.status(500).json({ message: "Une erreur s'est produite." });
+    }
+    return res.status(200).json({ ok: true });
+  },
+  editCategoryName: async (req, res, next) => {
+    const { categoryId } = req.params;
+    const { categoryName } = req.body;
+    const isAvailable = await categories.categoryIsAvailable(
+      categoryName,
+      categoryId
+    );
+    if (!isAvailable) {
+      const message = "Il existe déjà une catégorie avec ce nom.";
+      return res.status(400).json({ message });
+    }
+    const update = await categories.editCategoryName(categoryId, categoryName);
+    if (!update.acknowledged) {
       return res.status(500).json({ message: "Une erreur s'est produite." });
     }
     return res.status(200).json({ ok: true });

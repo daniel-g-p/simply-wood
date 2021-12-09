@@ -22,6 +22,12 @@ router.post(
 
 router.get("/categories/:categoryId", tryCatch(controller.getImagesInCategory));
 
+router.put(
+  "/categories/:categoryId",
+  tryCatch(isLoggedIn),
+  tryCatch(controller.editCategoryName)
+);
+
 router.post(
   "/upload-images/:categoryId",
   uploadFiles,
