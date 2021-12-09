@@ -14,6 +14,12 @@ router.get(
   tryCatch(controller.getImageCategories)
 );
 
+router.post(
+  "/categories",
+  tryCatch(isLoggedIn),
+  tryCatch(controller.addCategory)
+);
+
 router.get("/categories/:categoryId", tryCatch(controller.getImagesInCategory));
 
 router.post(

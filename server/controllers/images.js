@@ -1,11 +1,25 @@
-import image from "../models/image.js";
 import images from "../services/images.js";
+import categories from "../services/categories.js";
 
 export default {
   addImages: async (req, res, next) => {
     const { categoryId } = req.params;
     const { files } = req;
     await images.uploadImages(categoryId, files);
+    return res.status(200).json({ ok: true });
+  },
+  addCategory: async (req, res, next) => {
+    const { categoryName } = req.body;
+    const isAvailable = await categories.categoryIsAvailable(categoryName);
+    if (!isAvailable) {
+      return res
+        .status(400)
+        .json({ message: "Il existe déjà une catégorie avec ce nom." });
+    }
+    const insertion = await categories.addCategory(categoryName);
+    if (!insertion.acknowledged) {
+      return res.status(500).json({ message: "Une erreur s'est produite." });
+    }
     return res.status(200).json({ ok: true });
   },
   getImageCategories: async (req, res, next) => {
@@ -30,10 +44,8 @@ export default {
     const { imageId } = req.body;
     const result = await images.deleteImageById(imageId);
     if (!result) {
-      console.log(result);
       return res.status(500).json({ message: "Suppression échouée." });
     }
-    console.log("ALL GOOD");
     return res.status(200).json({ ok: true });
   },
 };

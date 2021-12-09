@@ -8,7 +8,10 @@
     </base-modal>
     <admin-navigation></admin-navigation>
     <admin-title>Images</admin-title>
-    <category-options v-model="activeCategory"></category-options>
+    <category-options
+      v-model="activeCategory"
+      @failed="toggleAlert"
+    ></category-options>
     <div class="images__list" v-if="activeCategory">
       <add-images-button
         :categoryId="activeCategory"

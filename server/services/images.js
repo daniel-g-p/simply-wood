@@ -31,7 +31,6 @@ export default {
   },
   deleteImageById: async (imageId) => {
     const image = await db.findById("images", imageId, ["publicId"]);
-    console.log(image);
     if (!image) {
       return false;
     }
