@@ -20,7 +20,7 @@
           :key="category._id"
           :value="category._id"
         >
-          {{ category.name }}
+          {{ category.frName }}
         </option>
       </select>
       <div class="category__select-icon-box">

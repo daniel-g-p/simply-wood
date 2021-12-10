@@ -1,7 +1,9 @@
-export default (name) => {
+export default (frName, nlName, enName, deName) => {
   return {
-    name,
-    tag: name.toLowerCase().replaceAll(" ", "-"),
+    frName,
+    nlName,
+    enName,
+    deName,
     mainImage: "",
   };
 };

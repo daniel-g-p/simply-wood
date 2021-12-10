@@ -46,6 +46,7 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.categories) {
+            console.log(res.categories);
             context.commit("setCategories", res.categories);
           }
         })

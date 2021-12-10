@@ -9,30 +9,29 @@ export default {
     return res.status(200).json({ ok: true });
   },
   addCategory: async (req, res, next) => {
-    const { categoryName } = req.body;
-    const isAvailable = await categories.categoryIsAvailable(categoryName);
+    const { category } = req.body;
+    const { fr, nl, en, de } = category;
+    const isAvailable = await categories.categoryIsAvailable(fr, nl, en, de);
     if (!isAvailable) {
       const message = "Il existe déjà une catégorie avec ce nom.";
       return res.status(400).json({ message });
     }
-    const insertion = await categories.addCategory(categoryName);
+    const insertion = await categories.addCategory(fr, nl, en, de);
     if (!insertion.acknowledged) {
       return res.status(500).json({ message: "Une erreur s'est produite." });
     }
     return res.status(200).json({ ok: true });
   },
-  editCategoryName: async (req, res, next) => {
+  editCategoryNames: async (req, res, next) => {
     const { categoryId } = req.params;
-    const { categoryName } = req.body;
-    const isAvailable = await categories.categoryIsAvailable(
-      categoryName,
-      categoryId
-    );
+    const { category } = req.body;
+    const { fr, nl, en, de } = category;
+    const isAvailable = await categories.categoryIsAvailable(fr, nl, en, de, categoryId);
     if (!isAvailable) {
       const message = "Il existe déjà une catégorie avec ce nom.";
       return res.status(400).json({ message });
     }
-    const update = await categories.editCategoryName(categoryId, categoryName);
+    const update = await categories.editCategoryName(categoryId, fr, nl, en, de);
     if (!update.acknowledged) {
       return res.status(500).json({ message: "Une erreur s'est produite." });
     }

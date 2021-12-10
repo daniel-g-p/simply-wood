@@ -4,19 +4,35 @@
       <p v-if="watchMode === 'delete'" class="form__delete">
         Es-tu sûr de vouloir supprimer cette catégorie et toutes ses images?
       </p>
-      <base-textbox
-        v-else
-        :id="'categoryName'"
-        :label="inputLabel"
-        v-model="input"
-      ></base-textbox>
+      <div v-else class="form__fields">
+        <base-textbox
+          :id="'categoryNameFr'"
+          :label="'Nom de la catégorie (FR)'"
+          v-model="input.fr"
+        ></base-textbox>
+        <base-textbox
+          :id="'categoryNameNl'"
+          :label="'Nom de la catégorie (NL)'"
+          v-model="input.nl"
+        ></base-textbox>
+        <base-textbox
+          :id="'categoryNameEn'"
+          :label="'Nom de la catégorie (EN)'"
+          v-model="input.en"
+        ></base-textbox>
+        <base-textbox
+          :id="'categoryNameDe'"
+          :label="'Nom de la catégorie (DE)'"
+          v-model="input.de"
+        ></base-textbox>
+      </div>
       <base-button>{{ buttonText }}</base-button>
     </form>
   </base-modal>
 </template>
 
 <script>
-import { ref, computed, watch } from "vue";
+import { computed, watch, reactive } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -38,29 +54,32 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
-    const input = ref("");
+    const input = reactive({
+      fr: "",
+      nl: "",
+      en: "",
+      de: "",
+    });
     const watchMode = computed(() => {
       return props.mode;
     });
     watch(watchMode, (value) => {
       if (value === "edit" && props.categoryId) {
         const categories = store.getters["admin/categories"];
-        const { name } = categories.find((category) => {
-          return category._id === props.categoryId;
-        });
-        input.value = name;
+        const { frName, nlName, enName, deName } = categories.find(
+          (category) => {
+            return category._id === props.categoryId;
+          }
+        );
+        input.fr = frName;
+        input.nl = nlName;
+        input.en = enName;
+        input.de = deName;
       } else {
-        input.value = "";
-      }
-    });
-    const inputLabel = computed(() => {
-      switch (watchMode.value) {
-        case "add":
-          return "Nouvelle catégorie";
-        case "edit":
-          return "Nom de la catégorie";
-        default:
-          return "";
+        input.fr = "";
+        input.nl = "";
+        input.en = "";
+        input.de = "";
       }
     });
     const buttonText = computed(() => {
@@ -79,8 +98,9 @@ export default {
       emit("close");
     };
     const submitForm = () => {
+      console.log("SUMBIT");
       const isDeleteMode = watchMode.value === "delete";
-      if (!input.value && !isDeleteMode) {
+      if (!isDeleteMode && !(input.fr && input.nl && input.en && input.de)) {
         return;
       }
       const isAddMode = watchMode.value === "add";
@@ -102,7 +122,7 @@ export default {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ categoryName: input.value }),
+              body: JSON.stringify({ category: input }),
             },
           };
       closeModal();
@@ -126,7 +146,7 @@ export default {
           store.dispatch("admin/toggleLoader");
         });
     };
-    return { watchMode, buttonText, closeModal, input, inputLabel, submitForm };
+    return { watchMode, buttonText, closeModal, input, submitForm };
   },
 };
 </script>
@@ -137,5 +157,10 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 </style>

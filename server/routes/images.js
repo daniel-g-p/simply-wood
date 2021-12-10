@@ -16,7 +16,7 @@ router
 router
   .route("/categories/:categoryId")
   .get(tryCatch(controller.getImagesInCategory))
-  .put(tryCatch(isLoggedIn), tryCatch(controller.editCategoryName))
+  .put(tryCatch(isLoggedIn), tryCatch(controller.editCategoryNames))
   .delete(tryCatch(isLoggedIn), tryCatch(controller.deleteCategory));
 
 
