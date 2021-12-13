@@ -59,10 +59,31 @@ export default {
     }
     const { name, email } = req.body;
     const update = await users.updateAdminData(userId, name, email);
-    console.log(update)
-    // if (!update.acknowledged) {
-    //   return res.status(500).json({ message: "Une erreur s'est produite." });
-    // }
+    if (!update.acknowledged) {
+      return res.status(500).json({ message: "Une erreur s'est produite." });
+    }
+    return res.status(200).json({ ok: true });
+  },
+  changePassword: async (req, res, next) => {
+    const jwtToken = req.signedCookies.userId;
+    const userId = users.verifyJwtToken(jwtToken);
+    if (!userId) {
+      return res.status(400).json({ message: "Identification échouée." });
+    }
+    const data = users.validatePasswordUpdate(req.body);
+    if (!data.valid) {
+      return res.status(400).json({ message: data.error });
+    }
+    const { password, newPassword } = data.data;
+    const user = await users.findUserById(userId);
+    const correctPassword = await users.checkPassword(user.password, password);
+    if (!correctPassword) {
+      return res.status(403).json({ message: "Mot de passe incorrect." });
+    }
+    const update = await users.updatePassword(userId, newPassword);
+    if (!update.acknowledged) {
+      return res.status(500).json({ message: "Une erreur s'est produite." });
+    }
     return res.status(200).json({ ok: true });
   },
 };

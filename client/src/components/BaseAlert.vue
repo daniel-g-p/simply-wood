@@ -48,6 +48,7 @@ export default {
   position: fixed;
   top: 0;
   left: 50%;
+  z-index: 100;
   transform: translateX(-50%);
   width: 100%;
   max-width: 32rem;

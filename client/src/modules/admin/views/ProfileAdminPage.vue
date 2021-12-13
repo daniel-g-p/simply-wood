@@ -2,7 +2,7 @@
   <main class="profile">
     <admin-navigation></admin-navigation>
     <admin-title>Utilisateur</admin-title>
-    <form class="profile__form" novalidate @submit.prevent="updateAdmin">
+    <form class="profile__form" novalidate @submit.prevent="">
       <base-textbox
         :id="'name'"
         :label="'Nom'"
@@ -16,7 +16,7 @@
         v-model="email"
         @change="updateAdmin"
       ></base-textbox>
-      <base-button class="profile__button">Changer mot de passe</base-button>
+      <password-change @ok="fetchAdmin"></password-change>
     </form>
   </main>
 </template>
@@ -27,11 +27,13 @@ import { useStore } from "vuex";
 
 import AdminNavigation from "../components/AdminNavigation.vue";
 import AdminTitle from "../components/AdminTitle.vue";
+import PasswordChange from "../components/PasswordChange.vue";
 
 export default {
   components: {
     AdminNavigation,
     AdminTitle,
+    PasswordChange,
   },
   setup() {
     const store = useStore();
@@ -83,7 +85,7 @@ export default {
     onMounted(() => {
       fetchAdmin();
     });
-    return { name, email, updateAdmin };
+    return { name, email, updateAdmin, fetchAdmin };
   },
 };
 </script>

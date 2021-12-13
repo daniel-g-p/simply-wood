@@ -13,5 +13,11 @@ router.get("/login", tryCatch(controller.checkLoginStatus));
 router
   .route("/admin")
   .get(tryCatch(isLoggedIn), tryCatch(controller.getAdminData))
-  .post(tryCatch(isLoggedIn), tryCatch(controller.updateAdminData))
+  .post(tryCatch(isLoggedIn), tryCatch(controller.updateAdminData));
+
+router.post(
+  "/change-password",
+  tryCatch(isLoggedIn),
+  tryCatch(controller.changePassword)
+);
 export default router;
