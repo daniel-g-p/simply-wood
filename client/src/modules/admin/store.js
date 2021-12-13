@@ -5,6 +5,10 @@ export default {
       categories: [],
       activeCategory: "",
       loaderActive: false,
+      admin: {
+        name: "",
+        email: "",
+      },
     };
   },
   getters: {
@@ -16,6 +20,9 @@ export default {
     },
     loaderActive(state) {
       return state.loaderActive;
+    },
+    admin(state) {
+      return state.admin;
     },
   },
   mutations: {
@@ -35,6 +42,11 @@ export default {
       });
       state.categories[index].mainImage = imageUrl;
     },
+    setAdmin(state, payload) {
+      const { name, email } = payload;
+      state.admin.name = name;
+      state.admin.email = email;
+    },
   },
   actions: {
     setCategories(context) {
@@ -46,7 +58,6 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.categories) {
-            console.log(res.categories);
             context.commit("setCategories", res.categories);
           }
         })

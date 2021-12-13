@@ -30,4 +30,10 @@ export default {
     const user = await db.findById("users", userId, ["_id"]);
     return user ? true : false;
   },
+  getAdminData: async (userId) => {
+    return await db.findById("users", userId, ["name", "email"]);
+  },
+  updateAdminData: async (userId, name, email) => {
+    return await db.updateById("users", userId, { name, email });
+  },
 };

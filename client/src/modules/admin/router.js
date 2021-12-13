@@ -47,7 +47,7 @@ export default {
     {
       path: "utilisateur",
       name: "user",
-      component: () => import("./views/ImagesAdminPage.vue"),
+      component: () => import("./views/ProfileAdminPage.vue"),
     },
   ],
 };

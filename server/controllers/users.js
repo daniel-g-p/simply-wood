@@ -45,4 +45,24 @@ export default {
     }
     return res.status(200).json({ ok: true });
   },
+  getAdminData: async (req, res, next) => {
+    const jwtToken = req.signedCookies.userId;
+    const userId = users.verifyJwtToken(jwtToken);
+    const admin = await users.getAdminData(userId);
+    return res.status(200).json({ admin });
+  },
+  updateAdminData: async (req, res, next) => {
+    const jwtToken = req.signedCookies.userId;
+    const userId = users.verifyJwtToken(jwtToken);
+    if (!userId) {
+      return res.status(400).json({ message: "Identification échouée." });
+    }
+    const { name, email } = req.body;
+    const update = await users.updateAdminData(userId, name, email);
+    console.log(update)
+    // if (!update.acknowledged) {
+    //   return res.status(500).json({ message: "Une erreur s'est produite." });
+    // }
+    return res.status(200).json({ ok: true });
+  },
 };

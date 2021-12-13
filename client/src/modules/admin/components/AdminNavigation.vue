@@ -82,7 +82,7 @@ export default {
   gap: 0.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid $color-blue-transparent;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   &__link {
     width: 2.5rem;
     height: 2.5rem;

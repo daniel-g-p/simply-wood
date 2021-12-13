@@ -7,6 +7,7 @@
       :id="id"
       :value="modelValue"
       @input="updateValue"
+      @change="emitChange"
     />
     <label class="input__label" :for="id">{{ label }}</label>
     <p class="input__error">{{ errorMessage }}</p>
@@ -46,6 +47,7 @@ export default {
       required: true,
     },
   },
+  emits: ["update:modelValue", "change"],
   setup(props, { emit }) {
     const updateValue = (event) => {
       emit("update:modelValue", event.target.value);
@@ -53,7 +55,10 @@ export default {
     const inputError = computed(() => {
       return { "input__input--error": props.error };
     });
-    return { updateValue, inputError };
+    const emitChange = () => {
+      emit("change");
+    };
+    return { updateValue, inputError, emitChange };
   },
 };
 </script>
