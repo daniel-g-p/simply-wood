@@ -1,22 +1,24 @@
 <template>
   <div class="page">
-    <transition name="transition__header-">
-      <header class="page__header" v-if="showHeader">
-        <base-link
-          class="page__link"
-          :color="'blue'"
-          :route-name="homeLink.routeName"
-          >&#8592; {{ homeLink.label }}</base-link
-        >
-        <h1 class="page__title">{{ title }}</h1>
-        <p class="page__description">{{ description }}</p>
-      </header>
-    </transition>
-    <transition name="transition__main-">
-      <main class="page__content" v-if="showMain">
-        <slot></slot>
-      </main>
-    </transition>
+    <div class="page__content">
+      <transition name="transition__header-">
+        <header class="page__header" v-if="showHeader">
+          <base-link
+            class="page__link"
+            :color="'blue'"
+            :route-name="homeLink.routeName"
+            >&#8592; {{ homeLink.label }}</base-link
+          >
+          <h1 class="page__title">{{ title }}</h1>
+          <p v-if="description" class="page__description">{{ description }}</p>
+        </header>
+      </transition>
+      <transition name="transition__main-">
+        <main class="page__content" v-if="showMain">
+          <slot></slot>
+        </main>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -34,7 +36,7 @@ export default {
     },
     description: {
       type: String,
-      required: true,
+      default: "",
     },
   },
   setup() {
@@ -79,6 +81,10 @@ export default {
   }
   @include responsive($screen-desktop-s) {
     padding: 4.5rem 10vw;
+  }
+  &__content {
+    max-width: 72rem;
+    margin: 0 auto;
   }
   &__header {
     display: flex;

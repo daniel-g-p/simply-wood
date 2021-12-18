@@ -28,4 +28,8 @@ export default {
       },
     ],
   },
+  images: {
+    title: "Onze op maat gesnedene creaties",
+    description: "Lorem ipsum dolor sit amet.",
+  },
 };

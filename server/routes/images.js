@@ -10,7 +10,7 @@ const router = Router();
 
 router
   .route("/categories")
-  .get(tryCatch(isLoggedIn), tryCatch(controller.getImageCategories))
+  .get(tryCatch(controller.getImageCategories))
   .post(tryCatch(isLoggedIn), tryCatch(controller.addCategory));
 
 router

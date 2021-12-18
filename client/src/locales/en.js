@@ -28,4 +28,8 @@ export default {
       },
     ],
   },
+  images: {
+    title: "Our custom creations",
+    description: "Lorem ipsum dolor sit amet.",
+  },
 };

@@ -81,6 +81,9 @@ export default {
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.25s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover,
     &:focus {
       background-color: $color-grey-light;
