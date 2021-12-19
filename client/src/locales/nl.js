@@ -5,7 +5,7 @@ export default {
     nav: [
       { label: "Over ons", path: "over-ons", routeName: "nlAbout" },
       { label: "Onze creaties", path: "onze-creaties", routeName: "nlImages" },
-      { label: "Meningen", path: "meningen", routeName: "nlReviews" },
+      // { label: "Meningen", path: "meningen", routeName: "nlReviews" },
       { label: "Contact", path: "contact", routeName: "nlContact" },
     ],
   },
@@ -31,5 +31,21 @@ export default {
   images: {
     title: "Onze op maat gesnedene creaties",
     description: "Lorem ipsum dolor sit amet.",
+  },
+  contact: {
+    title: "Contact",
+    description:
+      "Heb je nog vragen? Stuur ons hieronder een bericht en wij nemen zo spoedig mogelijk contact met u op.",
+    fields: {
+      formTitle: "Contactformulier",
+      firstName: "Voornam",
+      lastName: "Familiennaam",
+      zipCode: "Postcode",
+      phone: "Telefoonnummer",
+      email: "Mailadres",
+      subject: "Onderwerp",
+      message: "Bericht",
+      button: "Verzenden",
+    },
   },
 };

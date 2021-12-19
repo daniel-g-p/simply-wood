@@ -1,6 +1,15 @@
 <template>
   <div class="input">
+    <textarea
+      v-if="type === 'textarea'"
+      class="input__input input__input--textarea"
+      :class="inputError"
+      :id="id"
+      :value="modelValue"
+      @input="updateValue"
+    ></textarea>
     <input
+      v-else
       class="input__input"
       :class="inputError"
       :type="type"
@@ -24,7 +33,9 @@ export default {
       type: String,
       default: "text",
       validator(value) {
-        return ["text", "email", "password", "number"].includes(value);
+        return ["text", "email", "password", "number", "textarea"].includes(
+          value
+        );
       },
     },
     id: {
@@ -98,6 +109,14 @@ export default {
       & ~ .input__error {
         display: block;
       }
+      & ~ .input__label {
+        color: $color-red;
+      }
+    }
+    &--textarea {
+      resize: none;
+      height: 6rem;
+      line-height: 1.25;
     }
   }
   &__underline {

@@ -146,9 +146,6 @@ export default {
     @include responsive($screen-desktop-s) {
       font-size: 4.5rem;
     }
-    @include responsive($screen-desktop-l) {
-      font-size: 6rem;
-    }
   }
 }
 </style>

@@ -9,6 +9,7 @@ import { connectToDatabase } from "./utilities/database.js";
 
 import usersRouter from "./routes/users.js";
 import imagesRouter from "./routes/images.js";
+import contactRouter from "./routes/contact.js";
 
 import { errorHandler, catchAllRoute } from "./middleware/errors.js";
 
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use("/api/users", usersRouter);
 app.use("/api/images", imagesRouter);
+app.use("/api/contact", contactRouter);
 
 app.use(errorHandler);
 app.use(catchAllRoute);

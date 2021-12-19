@@ -5,7 +5,7 @@ export default {
     nav: [
       { label: "A propos", path: "a-propos", routeName: "frAbout" },
       { label: "Nos créations", path: "creations", routeName: "frImages" },
-      { label: "Avis", path: "avis", routeName: "frReviews" },
+      // { label: "Avis", path: "avis", routeName: "frReviews" },
       { label: "Contact", path: "contact", routeName: "frContact" },
     ],
   },
@@ -31,5 +31,21 @@ export default {
   images: {
     title: "Nos créations sur mesure",
     description: "Lorem ipsum dolor sit amet.",
+  },
+  contact: {
+    title: "Contact",
+    description:
+      "Vous avez encore des questions? N’hésitez pas à nous envoyer un message ci-dessous et nous reviendrons vers vous dans les moindres délais.",
+    fields: {
+      formTitle: "Formulaire de contact",
+      firstName: "Prénom",
+      lastName: "Nom de famille",
+      zipCode: "Code postal",
+      phone: "Numéro de téléphone",
+      email: "Adresse email",
+      subject: "Sujet",
+      message: "Message",
+      button: "Envoyer",
+    },
   },
 };

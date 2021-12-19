@@ -5,7 +5,7 @@ export default {
     nav: [
       { label: "About Us", path: "about-us", routeName: "enAbout" },
       { label: "Our creations", path: "creations", routeName: "enImages" },
-      { label: "Reviews", path: "reviews", routeName: "enReviews" },
+      // { label: "Reviews", path: "reviews", routeName: "enReviews" },
       { label: "Contact", path: "contact", routeName: "enContact" },
     ],
   },
@@ -31,5 +31,21 @@ export default {
   images: {
     title: "Our custom creations",
     description: "Lorem ipsum dolor sit amet.",
+  },
+  contact: {
+    title: "Contact",
+    description:
+      "Still have questions? Feel free to send us a message below and we will get back to you as soon as possible.",
+    fields: {
+      formTitle: "Contact form",
+      firstName: "First name",
+      lastName: "Last name",
+      zipCode: "ZIP Code",
+      phone: "Phone number",
+      email: "Email address",
+      subject: "Subject",
+      message: "Message",
+      button: "Send",
+    },
   },
 };
