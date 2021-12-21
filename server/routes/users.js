@@ -20,4 +20,7 @@ router.post(
   tryCatch(isLoggedIn),
   tryCatch(controller.changePassword)
 );
+
+router.get("/logout", tryCatch(controller.logout));
+
 export default router;

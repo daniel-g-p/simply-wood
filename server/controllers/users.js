@@ -86,4 +86,7 @@ export default {
     }
     return res.status(200).json({ ok: true });
   },
+  logout: (req, res, next) => {
+    return res.status(200).clearCookie("userId").json({ ok: true });
+  },
 };

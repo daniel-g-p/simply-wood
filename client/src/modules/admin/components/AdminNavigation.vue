@@ -42,7 +42,7 @@
         />
       </svg>
     </router-link>
-    <button href="/" class="nav__link">
+    <button href="/" class="nav__link" @click="logout">
       <svg
         class="nav__icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -62,14 +62,35 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
 export default {
   setup() {
+    const router = useRouter();
+    const store = useStore();
     const links = {
       home: { name: "frHome" },
       images: { name: "adminImages" },
       user: { name: "user" },
     };
-    return { links };
+    store.dispatch("admin/toggleLoader");
+    const logout = () => {
+      fetch(`${process.env.VUE_APP_API}/users/logout`)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            router.push({ name: "login" });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          store.dispatch("admin/toggleLoader");
+        });
+    };
+    return { links, logout };
   },
 };
 </script>
