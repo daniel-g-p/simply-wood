@@ -74,8 +74,8 @@ export default {
       images: { name: "adminImages" },
       user: { name: "user" },
     };
-    store.dispatch("admin/toggleLoader");
     const logout = () => {
+      store.dispatch("admin/toggleLoader");
       fetch(`${process.env.VUE_APP_API}/users/logout`)
         .then((res) => res.json())
         .then((res) => {
