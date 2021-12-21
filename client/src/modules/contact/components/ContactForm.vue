@@ -151,13 +151,13 @@ export default {
             form.subject = "";
             form.message = "";
             formStatus.value = "success";
-          } else if (res.errors) {
-            if (res.errors.server) {
-              formStatus.value = "error";
-            } else {
+          } else {
+            if (res.errors && !res.errors.find((item) => item === "server")) {
               for (let error of res.errors) {
                 errors[error] = true;
               }
+            } else {
+              formStatus.value = "error";
             }
           }
         })
