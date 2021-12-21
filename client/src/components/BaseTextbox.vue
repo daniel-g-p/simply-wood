@@ -7,6 +7,7 @@
       :id="id"
       :value="modelValue"
       @input="updateValue"
+      @change="emitChange"
     ></textarea>
     <input
       v-else

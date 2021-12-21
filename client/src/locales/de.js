@@ -35,7 +35,7 @@ export default {
   contact: {
     title: "Kontakt",
     description:
-      "Haben Sie noch weitere Fragen? Setzen Sie sich gerne mit uns in Kontaktm, wir werden uns so schnell wie möglich bei Ihnen.",
+      "Haben Sie noch weitere Fragen? Setzen Sie sich gerne mit uns in Kontaktm, wir werden uns so schnell wie möglich bei Ihnen melden.",
     fields: {
       formTitle: "Kontaktformular",
       firstName: "Vorname",
@@ -47,5 +47,9 @@ export default {
       message: "Nachricht",
       button: "Senden",
     },
+    success:
+      "Vielen Dank für Ihre Nachricht, wir werden uns so schnell wie möglich bei Ihnen melden!",
+    error:
+      "Ihre Nachricht konnte nicht zugestellt werden, bitte versuchen Sie es später nochmal.",
   },
 };

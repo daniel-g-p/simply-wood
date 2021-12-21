@@ -47,5 +47,8 @@ export default {
       message: "Message",
       button: "Send",
     },
+    success:
+      "Thanks a lot for your message, we will come back to you as soon as possible!",
+    error: "Your message couldn't be delivered, please try again later.",
   },
 };

@@ -47,5 +47,8 @@ export default {
       message: "Bericht",
       button: "Verzenden",
     },
+    success:
+      "Dank u voor uw bericht, wij nemen zo spoedig mogelijk contact met u op!",
+    error: "Uw bericht kon niet worden afgeleverd, probeer het later nog eens.",
   },
 };

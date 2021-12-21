@@ -47,5 +47,9 @@ export default {
       message: "Message",
       button: "Envoyer",
     },
+    success:
+      "Merci beaucoup pour votre message, nous nous mettrons en contact avec vous au plus tôt!",
+    error:
+      "Votre message n'a pas pu être envoyé, veuillez reéssayer plus tard s'il vous plaît.",
   },
 };
