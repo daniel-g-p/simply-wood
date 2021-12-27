@@ -4,6 +4,9 @@
     <p class="intro__text">
       {{ text }}
     </p>
+    <router-link :to="aboutLink">
+      <base-button color="gold">{{ aboutLinkText }}</base-button>
+    </router-link>
   </div>
 </template>
 
@@ -22,7 +25,22 @@ export default {
     const text = computed(() => {
       return international(activeLanguage.value, "home", "text");
     });
-    return { text };
+    const aboutLink = computed(() => {
+      return { name: `${activeLanguage.value}About` };
+    });
+    const aboutLinkText = computed(() => {
+      switch (activeLanguage.value) {
+        case "en":
+          return "Learn more";
+        case "nl":
+          return "Leer meer";
+        case "de":
+          return "Mehr erfahren";
+        default:
+          return "En savoir plus";
+      }
+    });
+    return { text, aboutLink, aboutLinkText };
   },
 };
 </script>
@@ -31,6 +49,12 @@ export default {
 @use "../../../assets/styles/index.scss" as *;
 .intro {
   color: $color-gold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include responsive($screen-tablet-m) {
+    align-items: flex-start;
+  }
   &__heading {
     color: $color-gold;
     font-weight: 400;
@@ -52,6 +76,7 @@ export default {
     line-height: 1.5;
     margin-top: 1rem;
     max-width: 20rem;
+    margin-bottom: 2rem;
     @include responsive($screen-tablet-m) {
       text-align: left;
       max-width: initial;

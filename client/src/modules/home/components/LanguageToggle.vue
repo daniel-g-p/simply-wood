@@ -46,7 +46,6 @@ export default {
       return store.getters["language/activeLanguage"];
     });
     const setLanguage = (language) => {
-      console.log(language);
       store.dispatch("language/setActiveLanguage", language);
       router.push({ name: `${language}Home` });
     };
