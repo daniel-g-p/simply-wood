@@ -46,7 +46,7 @@ const seedImages = async (categoryIds) => {
 const seed = async () => {
   try {
     await connectToDatabase();
-    await seedAdmin("Admin", "admin@simplywood.be", "admin");
+    await seedAdmin("Administrateur", "simplywood.be@gmail.com", "Simplywood.2021");
     // const categoryIds = await seedCategories([
     //   "Categorie1",
     //   "Categorie2",
