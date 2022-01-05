@@ -1,6 +1,6 @@
 <template>
   <article class="contact">
-    <a href="tel:0032123456789" class="contact__item">
+    <a href="tel:0032499704706" class="contact__item">
       <div class="contact__icon-box">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +12,7 @@
           />
         </svg>
       </div>
-      <div class="contact__text">+32 123 45 67 89</div>
+      <div class="contact__text">+32 499 70 47 06</div>
     </a>
     <a
       href="https://www.google.com/maps/place/Simply+Wood/@50.8452081,4.4895991,17z/data=!3m1!4b1!4m5!3m4!1s0x47c3dea0ce6ec523:0x5340d0c762968d45!8m2!3d50.8452231!4d4.4917984"
@@ -33,7 +33,7 @@
       </div>
       <div class="contact__text">Van Severlaan 12, 1970 Wezembeek-Oppem</div>
     </a>
-    <a href="mailto:simplywood.be@gmail.com" class="contact__item">
+    <a href="mailto:contact@simplywood.be" class="contact__item">
       <div class="contact__icon-box">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@
           />
         </svg>
       </div>
-      <div class="contact__text">simplywood.be@gmail.com</div>
+      <div class="contact__text">contact@simplywood.be</div>
     </a>
   </article>
 </template>
