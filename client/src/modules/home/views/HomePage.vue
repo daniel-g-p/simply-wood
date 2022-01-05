@@ -35,8 +35,7 @@ export default {
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(
-      to bottom,
-      $color-blue,
+      $color-blue-transparent,
       $color-blue-transparent
     ),
     url("../../../assets/images/main-background.jpg");
