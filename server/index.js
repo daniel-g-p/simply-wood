@@ -29,7 +29,7 @@ app.use("/api/contact", contactRouter);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(historyApiFallback());
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "views")));
 app.get((req, res, next) => res.sendFile("index.html"));
 
 app.use(errorHandler);

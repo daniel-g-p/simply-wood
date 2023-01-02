@@ -1,9 +1,6 @@
-import config from "../config/index.js";
-
 import { db } from "../utilities/database.js";
 import { reformatImage } from "../utilities/sharp.js";
-import { randomId } from "../utilities/random-id.js";
-import { uploadImage, deleteImage } from "../utilities/s3.js";
+import { uploadImage, deleteImage } from "../utilities/cloudinary.js";
 
 import newImage from "../models/image.js";
 
@@ -14,8 +11,7 @@ export default {
     ]);
     for (let i = 0; i < files.length; i++) {
       const buffer = await reformatImage(files[i].buffer, 480, 480);
-      const public_id = randomId();
-      const url = await uploadImage(public_id, buffer);
+      const { public_id, url } = await uploadImage(buffer);
       const image = newImage(categoryId, url, public_id);
       await db.create("images", image);
       if (!mainImage && !i) {
@@ -38,13 +34,16 @@ export default {
     if (!image) {
       return false;
     }
-    deleteImage(image.imageUrl.replaceAll(config.cdnUrl, ""));
+    const { result } = await deleteImage(image.publicId);
+    if (result !== "ok") {
+      return false;
+    }
     return await db.deleteById("images", imageId);
   },
   deleteImagesByCategory: async (categoryId) => {
-    const images = await db.find("images", { categoryId }, ["imageUrl"]);
+    const images = await db.find("images", { categoryId }, ["publicId"]);
     for (let image of images) {
-      await deleteImage(image.imageUrl.replace(config.cdnUrl, ""));
+      await deleteImage(image.publicId);
     }
     return await db.delete("images", { categoryId });
   },

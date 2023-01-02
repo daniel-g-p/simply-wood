@@ -129,7 +129,6 @@ export default {
   &__image {
     display: block;
     width: 100%;
-    height: 100%;
     object-fit: cover;
   }
   &__text-box {
