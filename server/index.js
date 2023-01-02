@@ -18,7 +18,7 @@ import contactRouter from "./routes/contact.js";
 const app = express();
 
 app.get("/health-check", (req, res) => {
-  return req.status(200).json({ id: Date.now() });
+  return res.status(200).json({ id: Date.now() });
 });
 
 app.use(compression());
