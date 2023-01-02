@@ -35,7 +35,7 @@ export default {
   contact: {
     title: "Kontakt",
     description:
-      "Haben Sie noch weitere Fragen? Setzen Sie sich gerne mit uns in Kontaktm, wir werden uns so schnell wie möglich bei Ihnen melden.",
+      "Haben Sie noch weitere Fragen? Setzen Sie sich gerne mit uns in Kontakt, wir werden uns so schnell wie möglich bei Ihnen melden.",
     fields: {
       formTitle: "Kontaktformular",
       firstName: "Vorname",
