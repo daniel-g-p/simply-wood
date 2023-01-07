@@ -26,12 +26,24 @@ export default {
     const { categoryId } = req.params;
     const { category } = req.body;
     const { fr, nl, en, de } = category;
-    const isAvailable = await categories.categoryIsAvailable(fr, nl, en, de, categoryId);
+    const isAvailable = await categories.categoryIsAvailable(
+      fr,
+      nl,
+      en,
+      de,
+      categoryId
+    );
     if (!isAvailable) {
       const message = "Il existe déjà une catégorie avec ce nom.";
       return res.status(400).json({ message });
     }
-    const update = await categories.editCategoryName(categoryId, fr, nl, en, de);
+    const update = await categories.editCategoryName(
+      categoryId,
+      fr,
+      nl,
+      en,
+      de
+    );
     if (!update.acknowledged) {
       return res.status(500).json({ message: "Une erreur s'est produite." });
     }
