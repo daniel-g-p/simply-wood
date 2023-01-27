@@ -4,9 +4,14 @@
     <p class="intro__text">
       {{ text }}
     </p>
-    <router-link :to="aboutLink">
-      <base-button color="gold">{{ aboutLinkText }}</base-button>
-    </router-link>
+    <div class="intro__links">
+      <router-link :to="aboutLink" class="intro__links__link">
+        <base-button color="gold">{{ aboutLinkText }}</base-button>
+      </router-link>
+      <router-link :to="contactLink" class="intro__links__link">
+        <base-button color="purple">{{ contactLinkText }}</base-button>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -40,7 +45,22 @@ export default {
           return "En savoir plus";
       }
     });
-    return { text, aboutLink, aboutLinkText };
+    const contactLink = computed(() => {
+      return { name: `${activeLanguage.value}Contact` };
+    });
+    const contactLinkText = computed(() => {
+      switch (activeLanguage.value) {
+        case "en":
+          return "Contact us";
+        case "nl":
+          return "Contact opnemen";
+        case "de":
+          return "Kontakt aufnehmen";
+        default:
+          return "Contactez-nous";
+      }
+    });
+    return { text, aboutLink, aboutLinkText, contactLink, contactLinkText };
   },
 };
 </script>
@@ -80,6 +100,28 @@ export default {
     @include responsive($screen-tablet-m) {
       text-align: left;
       max-width: initial;
+    }
+  }
+  &__links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include responsive($screen-mobile-l) {
+      flex-direction: row;
+    }
+    &__link {
+      margin-right: 0;
+      margin-bottom: 1rem;
+      &:last-child {
+        margin: 0;
+      }
+      @include responsive($screen-mobile-l) {
+        margin-right: 1rem;
+        margin-bottom: 0;
+        &:last-child {
+          margin: 0;
+        }
+      }
     }
   }
 }
