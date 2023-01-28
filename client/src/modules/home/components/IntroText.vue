@@ -6,10 +6,19 @@
     </p>
     <div class="intro__links">
       <router-link :to="aboutLink" class="intro__links__link">
-        <base-button color="gold">{{ aboutLinkText }}</base-button>
+        <base-button color="gold" class="intro__links__link__button">{{
+          aboutLinkText
+        }}</base-button>
+      </router-link>
+      <router-link :to="imagesLink" class="intro__links__link">
+        <base-button color="blue" class="intro__links__link__button">{{
+          imagesLinkText
+        }}</base-button>
       </router-link>
       <router-link :to="contactLink" class="intro__links__link">
-        <base-button color="purple">{{ contactLinkText }}</base-button>
+        <base-button color="purple" class="intro__links__link__button">{{
+          contactLinkText
+        }}</base-button>
       </router-link>
     </div>
   </div>
@@ -45,6 +54,21 @@ export default {
           return "En savoir plus";
       }
     });
+    const imagesLink = computed(() => {
+      return { name: `${activeLanguage.value}Images` };
+    });
+    const imagesLinkText = computed(() => {
+      switch (activeLanguage.value) {
+        case "en":
+          return "Our creations";
+        case "nl":
+          return "Onze creaties";
+        case "de":
+          return "Unsere Werke";
+        default:
+          return "Nos créations";
+      }
+    });
     const contactLink = computed(() => {
       return { name: `${activeLanguage.value}Contact` };
     });
@@ -60,7 +84,15 @@ export default {
           return "Contactez-nous";
       }
     });
-    return { text, aboutLink, aboutLinkText, contactLink, contactLinkText };
+    return {
+      text,
+      aboutLink,
+      aboutLinkText,
+      imagesLink,
+      imagesLinkText,
+      contactLink,
+      contactLinkText,
+    };
   },
 };
 </script>
@@ -103,24 +135,19 @@ export default {
     }
   }
   &__links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @include responsive($screen-mobile-l) {
-      flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 14rem;
+    @include responsive($screen-tablet-s) {
+      grid-template-columns: 1fr 1fr 1fr;
+      max-width: 42rem;
     }
     &__link {
-      margin-right: 0;
-      margin-bottom: 1rem;
-      &:last-child {
-        margin: 0;
-      }
-      @include responsive($screen-mobile-l) {
-        margin-right: 1rem;
-        margin-bottom: 0;
-        &:last-child {
-          margin: 0;
-        }
+      width: 100%;
+      &__button {
+        width: 100%;
       }
     }
   }
